@@ -1,1 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sentiment Watchdog - Support Ticket Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <!-- Header -->
+    <header class="bg-white shadow-sm border-b">
+        <div class="container mx-auto px-6 py-4">
+            <div class="flex items-center justify-between">
+                <h1 class="text-2xl font-bold text-gray-800">🔍 Sentiment Watchdog</h1>
+                <div class="text-sm text-gray-500">Support Ticket Analytics</div>
+            </div>
+        </div>
+    </header>
 
+    <div class="container mx-auto px-6 py-8">
+        <!-- Stats Overview -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+            <div class="bg-white rounded-lg shadow-sm p-6 border">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-sm font-medium text-gray-600">Total Tickets</p>
+                        <p class="text-2xl font-bold text-gray-900" id="totalTickets">0</p>
+                    </div>
+                    <div class="text-3xl">📋</div>
+                </div>
+            </div>
+            <div class="bg-white rounded-lg shadow-sm p-6 border">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-sm font-medium text-gray-600">Urgent Issues</p>
+                        <p class="text-2xl font-bold text-red-600" id="urgentCount">0</p>
+                    </div>
+                    <div class="text-3xl">🚨</div>
+                </div>
+            </div>
+            <div class="bg-white rounded-lg shadow-sm p-6 border">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-sm font-medium text-gray-600">Positive Feedback</p>
+                        <p class="text-2xl font-bold text-green-600" id="positiveCount">0</p>
+                    </div>
+                    <div class="text-3xl">😊</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <!-- Tickets List -->
+            <div class="bg-white rounded-lg shadow-sm border">
+                <div class="p-6 border-b">
+                    <h2 class="text-xl font-semibold text-gray-800">Recent Support Tickets</h2>
+                    <p class="text-sm text-gray-600 mt-1">Real-time sentiment analysis</p>
+                </div>
+                <div class="p-6">
+                    <div id="ticketsContainer" class="space-y-4">
+                        <!-- Tickets will be loaded here -->
+                        <div class="text-center py-8 text-gray-500">
+                            <div class="text-4xl mb-2">⏳</div>
+                            Loading tickets...
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sentiment Chart -->
+            <div class="bg-white rounded-lg shadow-sm border">
+                <div class="p-6 border-b">
+                    <h2 class="text-xl font-semibold text-gray-800">Sentiment Distribution</h2>
+                    <p class="text-sm text-gray-600 mt-1">Emotional analysis overview</p>
+                </div>
+                <div class="p-6">
+                    <canvas id="sentimentChart" width="400" height="300"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
