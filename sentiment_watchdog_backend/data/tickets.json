@@ -1,0 +1,72 @@
+[
+    {
+      "id": 1,
+      "message": "The app is crashing frequently after the latest update. Very frustrating experience!",
+      "timestamp": "2025-07-18T10:45:00",
+      "author": "User123",
+      "priority": "high"
+    },
+    {
+      "id": 2,
+      "message": "Great support! My issue was resolved quickly and the team was very helpful.",
+      "timestamp": "2025-07-18T11:00:00",
+      "author": "User456",
+      "priority": "medium"
+    },
+    {
+      "id": 3,
+      "message": "I'm having trouble logging in to my account. Could you please help?",
+      "timestamp": "2025-07-18T09:30:00",
+      "author": "User789",
+      "priority": "medium"
+    },
+    {
+      "id": 4,
+      "message": "This is the worst customer service I've ever experienced. Completely disappointed.",
+      "timestamp": "2025-07-18T14:15:00",
+      "author": "AngryCustomer",
+      "priority": "high"
+    },
+    {
+      "id": 5,
+      "message": "The new feature works perfectly! I love the improved user interface.",
+      "timestamp": "2025-07-18T16:20:00",
+      "author": "HappyUser",
+      "priority": "low"
+    },
+    {
+      "id": 6,
+      "message": "Payment processing seems to be down. Unable to complete transactions.",
+      "timestamp": "2025-07-19T09:00:00",
+      "author": "BusinessOwner",
+      "priority": "critical"
+    },
+    {
+      "id": 7,
+      "message": "Thanks for the quick response. The bug fix worked as expected.",
+      "timestamp": "2025-07-19T11:30:00",
+      "author": "Developer123",
+      "priority": "low"
+    },
+    {
+      "id": 8,
+      "message": "Can someone help me understand how to use the advanced search feature?",
+      "timestamp": "2025-07-19T13:45:00",
+      "author": "NewUser",
+      "priority": "low"
+    },
+    {
+      "id": 9,
+      "message": "The mobile app is extremely slow and keeps timing out during uploads.",
+      "timestamp": "2025-07-19T15:10:00",
+      "author": "MobileUser",
+      "priority": "medium"
+    },
+    {
+      "id": 10,
+      "message": "Excellent product! The customer support team went above and beyond to help me.",
+      "timestamp": "2025-07-20T08:30:00",
+      "author": "SatisfiedCustomer",
+      "priority": "low"
+    }
+  ]

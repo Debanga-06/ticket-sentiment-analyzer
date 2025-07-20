@@ -3,83 +3,555 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sentiment Watchdog - Support Ticket Dashboard</title>
+    <title>Sentiment Watchdog Dashboard</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        .ticket-card {
+            transition: all 0.3s ease;
+        }
+        .ticket-card:hover {
+            transform: translateY(-2px);
+        }
+        .gradient-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        .glass-effect {
+            backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.95);
+        }
+    </style>
 </head>
-<body class="bg-gray-50 min-h-screen">
+<body class="bg-gray-50">
     <!-- Header -->
-    <header class="bg-white shadow-sm border-b">
-        <div class="container mx-auto px-6 py-4">
+    <header class="gradient-bg text-white py-6 mb-8">
+        <div class="max-w-7xl mx-auto px-4">
             <div class="flex items-center justify-between">
-                <h1 class="text-2xl font-bold text-gray-800">🔍 Sentiment Watchdog</h1>
-                <div class="text-sm text-gray-500">Support Ticket Analytics</div>
+                <div>
+                    <h1 class="text-3xl font-bold">🎯 Sentiment Watchdog</h1>
+                    <p class="text-blue-100 mt-1">Real-time Customer Sentiment Analysis</p>
+                </div>
+                <div class="flex space-x-4">
+                    <button id="refreshBtn" class="bg-white bg-opacity-20 hover:bg-opacity-30 px-4 py-2 rounded-lg transition-all">
+                        🔄 Refresh
+                    </button>
+                    <button id="analyzeNewBtn" class="bg-white text-blue-600 hover:bg-blue-50 px-4 py-2 rounded-lg transition-all font-medium">
+                        ➕ Analyze New Text
+                    </button>
+                </div>
             </div>
         </div>
     </header>
 
-    <div class="container mx-auto px-6 py-8">
-        <!-- Stats Overview -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-            <div class="bg-white rounded-lg shadow-sm p-6 border">
-                <div class="flex items-center justify-between">
-                    <div>
+    <!-- Stats Cards -->
+    <div class="max-w-7xl mx-auto px-4 mb-8">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div class="glass-effect p-6 rounded-xl border border-white shadow-lg">
+                <div class="flex items-center">
+                    <div class="p-2 bg-blue-500 rounded-lg">
+                        <span class="text-white text-xl">📊</span>
+                    </div>
+                    <div class="ml-4">
                         <p class="text-sm font-medium text-gray-600">Total Tickets</p>
                         <p class="text-2xl font-bold text-gray-900" id="totalTickets">0</p>
                     </div>
-                    <div class="text-3xl">📋</div>
                 </div>
             </div>
-            <div class="bg-white rounded-lg shadow-sm p-6 border">
-                <div class="flex items-center justify-between">
-                    <div>
-                        <p class="text-sm font-medium text-gray-600">Urgent Issues</p>
-                        <p class="text-2xl font-bold text-red-600" id="urgentCount">0</p>
+            <div class="glass-effect p-6 rounded-xl border border-white shadow-lg">
+                <div class="flex items-center">
+                    <div class="p-2 bg-red-500 rounded-lg">
+                        <span class="text-white text-xl">🚨</span>
                     </div>
-                    <div class="text-3xl">🚨</div>
+                    <div class="ml-4">
+                        <p class="text-sm font-medium text-gray-600">High Priority</p>
+                        <p class="text-2xl font-bold text-gray-900" id="urgentCount">0</p>
+                    </div>
                 </div>
             </div>
-            <div class="bg-white rounded-lg shadow-sm p-6 border">
-                <div class="flex items-center justify-between">
-                    <div>
-                        <p class="text-sm font-medium text-gray-600">Positive Feedback</p>
-                        <p class="text-2xl font-bold text-green-600" id="positiveCount">0</p>
+            <div class="glass-effect p-6 rounded-xl border border-white shadow-lg">
+                <div class="flex items-center">
+                    <div class="p-2 bg-green-500 rounded-lg">
+                        <span class="text-white text-xl">😊</span>
                     </div>
-                    <div class="text-3xl">😊</div>
+                    <div class="ml-4">
+                        <p class="text-sm font-medium text-gray-600">Positive Sentiment</p>
+                        <p class="text-2xl font-bold text-gray-900" id="positiveCount">0</p>
+                    </div>
                 </div>
             </div>
         </div>
+    </div>
 
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+    <!-- Main Content -->
+    <div class="max-w-7xl mx-auto px-4">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
             <!-- Tickets List -->
-            <div class="bg-white rounded-lg shadow-sm border">
-                <div class="p-6 border-b">
-                    <h2 class="text-xl font-semibold text-gray-800">Recent Support Tickets</h2>
-                    <p class="text-sm text-gray-600 mt-1">Real-time sentiment analysis</p>
-                </div>
-                <div class="p-6">
-                    <div id="ticketsContainer" class="space-y-4">
-                        <!-- Tickets will be loaded here -->
-                        <div class="text-center py-8 text-gray-500">
-                            <div class="text-4xl mb-2">⏳</div>
-                            Loading tickets...
+            <div class="lg:col-span-2">
+                <div class="glass-effect rounded-xl border border-white shadow-lg">
+                    <div class="p-6 border-b border-gray-200">
+                        <h2 class="text-xl font-bold text-gray-900">Recent Tickets</h2>
+                        <p class="text-gray-600 text-sm mt-1">Customer support tickets with sentiment analysis</p>
+                    </div>
+                    <div class="p-6">
+                        <div id="ticketsContainer" class="space-y-4">
+                            <div class="text-center py-8 text-gray-500">
+                                <div class="text-4xl mb-2">⏳</div>
+                                Loading tickets...
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Sentiment Chart -->
-            <div class="bg-white rounded-lg shadow-sm border">
-                <div class="p-6 border-b">
-                    <h2 class="text-xl font-semibold text-gray-800">Sentiment Distribution</h2>
-                    <p class="text-sm text-gray-600 mt-1">Emotional analysis overview</p>
+            <!-- Chart and Quick Analyze -->
+            <div class="space-y-8">
+                <!-- Sentiment Chart -->
+                <div class="glass-effect rounded-xl border border-white shadow-lg">
+                    <div class="p-6 border-b border-gray-200">
+                        <h3 class="text-lg font-bold text-gray-900">Sentiment Distribution</h3>
+                    </div>
+                    <div class="p-6">
+                        <div style="height: 250px;">
+                            <canvas id="sentimentChart"></canvas>
+                        </div>
+                    </div>
                 </div>
-                <div class="p-6">
-                    <canvas id="sentimentChart" width="400" height="300"></canvas>
+
+                <!-- Quick Analyze -->
+                <div class="glass-effect rounded-xl border border-white shadow-lg">
+                    <div class="p-6 border-b border-gray-200">
+                        <h3 class="text-lg font-bold text-gray-900">Quick Analysis</h3>
+                    </div>
+                    <div class="p-6">
+                        <textarea 
+                            id="quickAnalyzeText" 
+                            class="w-full p-3 border border-gray-300 rounded-lg resize-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" 
+                            rows="4" 
+                            placeholder="Enter text to analyze sentiment..."></textarea>
+                        <button 
+                            id="quickAnalyzeBtn" 
+                            class="w-full mt-3 bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg transition-all">
+                            Analyze Sentiment
+                        </button>
+                        <div id="quickResults" class="mt-4 hidden">
+                            <div class="p-3 rounded-lg" id="quickResultsContent"></div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-    <script src="script.js"></script>
+
+    <!-- Modal for New Text Analysis -->
+    <div id="analyzeModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center p-4 z-50">
+        <div class="bg-white rounded-xl max-w-2xl w-full max-h-90vh overflow-y-auto">
+            <div class="p-6 border-b border-gray-200">
+                <div class="flex items-center justify-between">
+                    <h3 class="text-xl font-bold text-gray-900">Analyze New Text</h3>
+                    <button id="closeModal" class="text-gray-500 hover:text-gray-700">
+                        <span class="text-2xl">×</span>
+                    </button>
+                </div>
+            </div>
+            <div class="p-6">
+                <textarea 
+                    id="modalAnalyzeText" 
+                    class="w-full p-4 border border-gray-300 rounded-lg resize-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" 
+                    rows="6" 
+                    placeholder="Enter customer feedback, support ticket, or any text to analyze..."></textarea>
+                
+                <div class="mt-4 flex space-x-2">
+                    <button class="px-3 py-1 text-sm bg-blue-100 text-blue-600 rounded-full hover:bg-blue-200 transition-all" onclick="setModalExample('I love this product! Amazing customer service and fast delivery.')">😊 Positive</button>
+                    <button class="px-3 py-1 text-sm bg-red-100 text-red-600 rounded-full hover:bg-red-200 transition-all" onclick="setModalExample('This is terrible! Worst experience ever. Very disappointed.')">😠 Negative</button>
+                    <button class="px-3 py-1 text-sm bg-yellow-100 text-yellow-600 rounded-full hover:bg-yellow-200 transition-all" onclick="setModalExample('The product is okay, nothing special but functional.')">😐 Neutral</button>
+                </div>
+
+                <button 
+                    id="modalAnalyzeBtn" 
+                    class="w-full mt-4 bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-4 rounded-lg transition-all">
+                    🔍 Analyze Sentiment
+                </button>
+                
+                <div id="modalResults" class="mt-6 hidden">
+                    <div class="p-4 rounded-lg bg-gray-50">
+                        <div id="modalResultsContent"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Configuration
+        const API_URL = 'http://localhost:5001/api/analyze-ticket';
+
+        // Sample data (fallback if backend is not available)
+        const sampleTickets = [
+            {
+                id: "001",
+                message: "I absolutely love this new feature! It works perfectly and saves me so much time. Great job!",
+                sentiment: "Joy",
+                priority: "low",
+                timestamp: new Date(Date.now() - 2 * 60 * 60 * 1000).toISOString()
+            },
+            {
+                id: "002", 
+                message: "This is completely broken! I've been trying for hours and nothing works. Very frustrated!",
+                sentiment: "Anger",
+                priority: "high",
+                timestamp: new Date(Date.now() - 30 * 60 * 1000).toISOString()
+            },
+            {
+                id: "003",
+                message: "I'm not sure how to use this feature. The documentation is unclear and I'm confused about the next steps.",
+                sentiment: "Confusion",
+                priority: "medium", 
+                timestamp: new Date(Date.now() - 4 * 60 * 60 * 1000).toISOString()
+            },
+            {
+                id: "004",
+                message: "Thank you for the quick response! The solution worked perfectly. Excellent support team!",
+                sentiment: "Joy",
+                priority: "low",
+                timestamp: new Date(Date.now() - 1 * 60 * 60 * 1000).toISOString()
+            },
+            {
+                id: "005",
+                message: "The system keeps crashing when I try to upload files. This is blocking my work completely!",
+                sentiment: "Anger", 
+                priority: "high",
+                timestamp: new Date(Date.now() - 15 * 60 * 1000).toISOString()
+            }
+        ];
+
+        // Initialize dashboard
+        document.addEventListener('DOMContentLoaded', function() {
+            loadDashboard();
+            setupEventListeners();
+        });
+
+        function setupEventListeners() {
+            document.getElementById('refreshBtn').addEventListener('click', loadDashboard);
+            document.getElementById('analyzeNewBtn').addEventListener('click', () => {
+                document.getElementById('analyzeModal').classList.remove('hidden');
+                document.getElementById('analyzeModal').classList.add('flex');
+            });
+            document.getElementById('closeModal').addEventListener('click', closeModal);
+            document.getElementById('quickAnalyzeBtn').addEventListener('click', quickAnalyze);
+            document.getElementById('modalAnalyzeBtn').addEventListener('click', modalAnalyze);
+            
+            // Close modal on background click
+            document.getElementById('analyzeModal').addEventListener('click', (e) => {
+                if (e.target.id === 'analyzeModal') closeModal();
+            });
+        }
+
+        function closeModal() {
+            document.getElementById('analyzeModal').classList.add('hidden');
+            document.getElementById('analyzeModal').classList.remove('flex');
+            document.getElementById('modalResults').classList.add('hidden');
+            document.getElementById('modalAnalyzeText').value = '';
+        }
+
+        function setModalExample(text) {
+            document.getElementById('modalAnalyzeText').value = text;
+        }
+
+        async function loadDashboard() {
+            try {
+                // Try to load from JSON file first
+                const response = await fetch('tickets.json');
+                if (response.ok) {
+                    const data = await response.json();
+                    displayTickets(data);
+                    updateStats(data);
+                    createSentimentChart(data);
+                    console.log('✅ Dashboard loaded from tickets.json');
+                } else {
+                    throw new Error('tickets.json not found');
+                }
+            } catch (error) {
+                console.log('📝 Loading sample data (tickets.json not found)');
+                displayTickets(sampleTickets);
+                updateStats(sampleTickets);
+                createSentimentChart(sampleTickets);
+            }
+        }
+
+        // Your existing functions with some enhancements
+        const sentimentColors = {
+            'Anger': {
+                bg: 'bg-red-100',
+                text: 'text-red-800',
+                border: 'border-red-200',
+                emoji: '😠'
+            },
+            'Joy': {
+                bg: 'bg-green-100',
+                text: 'text-green-800',
+                border: 'border-green-200',
+                emoji: '😊'
+            },
+            'Confusion': {
+                bg: 'bg-yellow-100',
+                text: 'text-yellow-800',
+                border: 'border-yellow-200',
+                emoji: '🤔'
+            },
+            'Positive': {
+                bg: 'bg-green-100',
+                text: 'text-green-800',
+                border: 'border-green-200',
+                emoji: '😊'
+            },
+            'Negative': {
+                bg: 'bg-red-100',
+                text: 'text-red-800',
+                border: 'border-red-200',
+                emoji: '😠'
+            },
+            'Neutral': {
+                bg: 'bg-gray-100',
+                text: 'text-gray-800',
+                border: 'border-gray-200',
+                emoji: '😐'
+            }
+        };
+
+        const priorityColors = {
+            'high': 'bg-red-500',
+            'medium': 'bg-yellow-500',
+            'low': 'bg-green-500'
+        };
+
+        function formatTimeAgo(timestamp) {
+            const now = new Date();
+            const time = new Date(timestamp);
+            const diffInHours = Math.floor((now - time) / (1000 * 60 * 60));
+            
+            if (diffInHours < 1) return 'Just now';
+            if (diffInHours < 24) return `${diffInHours}h ago`;
+            return `${Math.floor(diffInHours / 24)}d ago`;
+        }
+
+        function createTicketCard(ticket) {
+            const colors = sentimentColors[ticket.sentiment] || sentimentColors['Neutral'];
+            const priorityColor = priorityColors[ticket.priority] || priorityColors['medium'];
+            
+            return `
+                <div class="ticket-card p-4 border rounded-lg hover:shadow-md transition-shadow bg-white">
+                    <div class="flex items-start justify-between mb-3">
+                        <div class="flex items-center space-x-2">
+                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${colors.bg} ${colors.text} ${colors.border} border">
+                                ${colors.emoji} ${ticket.sentiment}
+                            </span>
+                            <div class="w-2 h-2 rounded-full ${priorityColor}" title="${ticket.priority} priority"></div>
+                        </div>
+                        <span class="text-xs text-gray-500">#${ticket.id}</span>
+                    </div>
+                    <p class="text-gray-700 text-sm leading-relaxed mb-3">${ticket.message}</p>
+                    <div class="flex items-center justify-between text-xs text-gray-500">
+                        <span>${formatTimeAgo(ticket.timestamp)}</span>
+                        <span class="capitalize">${ticket.priority} priority</span>
+                    </div>
+                </div>
+            `;
+        }
+
+        function displayTickets(tickets) {
+            const container = document.getElementById('ticketsContainer');
+            container.innerHTML = tickets.map(ticket => createTicketCard(ticket)).join('');
+        }
+
+        function updateStats(tickets) {
+            const total = tickets.length;
+            const urgentCount = tickets.filter(t => t.priority === 'high').length;
+            const positiveCount = tickets.filter(t => t.sentiment === 'Joy' || t.sentiment === 'Positive').length;
+            
+            document.getElementById('totalTickets').textContent = total;
+            document.getElementById('urgentCount').textContent = urgentCount;
+            document.getElementById('positiveCount').textContent = positiveCount;
+        }
+
+        let sentimentChartInstance = null;
+
+        function createSentimentChart(tickets) {
+            const sentimentCounts = tickets.reduce((acc, ticket) => {
+                acc[ticket.sentiment] = (acc[ticket.sentiment] || 0) + 1;
+                return acc;
+            }, {});
+
+            const ctx = document.getElementById('sentimentChart').getContext('2d');
+            
+            // Destroy existing chart if it exists
+            if (sentimentChartInstance) {
+                sentimentChartInstance.destroy();
+            }
+            
+            sentimentChartInstance = new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: Object.keys(sentimentCounts),
+                    datasets: [{
+                        data: Object.values(sentimentCounts),
+                        backgroundColor: [
+                            '#EF4444', // Red for Anger/Negative
+                            '#22C55E', // Green for Joy/Positive  
+                            '#F59E0B', // Yellow for Confusion
+                            '#6B7280'  // Gray for Neutral
+                        ],
+                        borderWidth: 2,
+                        borderColor: '#ffffff'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                padding: 20,
+                                usePointStyle: true,
+                                font: {
+                                    size: 12
+                                }
+                            }
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    const label = context.label || '';
+                                    const value = context.parsed;
+                                    const total = context.dataset.data.reduce((a, b) => a + b, 0);
+                                    const percentage = Math.round((value / total) * 100);
+                                    return `${label}: ${value} (${percentage}%)`;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        async function quickAnalyze() {
+            const text = document.getElementById('quickAnalyzeText').value.trim();
+            if (!text) return;
+
+            const btn = document.getElementById('quickAnalyzeBtn');
+            const results = document.getElementById('quickResults');
+            
+            btn.textContent = 'Analyzing...';
+            btn.disabled = true;
+
+            try {
+                const sentiment = await analyzeSentiment(text);
+                displayQuickResults(sentiment);
+                results.classList.remove('hidden');
+            } catch (error) {
+                console.error('Analysis failed:', error);
+                document.getElementById('quickResultsContent').innerHTML = 
+                    '<div class="text-red-600">Analysis failed. Check if backend is running.</div>';
+                results.classList.remove('hidden');
+            } finally {
+                btn.textContent = 'Analyze Sentiment';
+                btn.disabled = false;
+            }
+        }
+
+        async function modalAnalyze() {
+            const text = document.getElementById('modalAnalyzeText').value.trim();
+            if (!text) return;
+
+            const btn = document.getElementById('modalAnalyzeBtn');
+            const results = document.getElementById('modalResults');
+            
+            btn.textContent = 'Analyzing...';
+            btn.disabled = true;
+
+            try {
+                const sentiment = await analyzeSentiment(text);
+                displayModalResults(sentiment);
+                results.classList.remove('hidden');
+            } catch (error) {
+                console.error('Analysis failed:', error);
+                document.getElementById('modalResultsContent').innerHTML = 
+                    '<div class="text-red-600">Analysis failed. Check if backend is running.</div>';
+                results.classList.remove('hidden');
+            } finally {
+                btn.textContent = '🔍 Analyze Sentiment';
+                btn.disabled = false;
+            }
+        }
+
+        async function analyzeSentiment(text) {
+            const response = await fetch(API_URL, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ text: text })
+            });
+            
+            if (!response.ok) {
+                throw new Error(`Server error: ${response.status}`);
+            }
+            
+            return await response.json();
+        }
+
+        function getSentimentLabel(compound) {
+            if (compound >= 0.05) return 'Positive';
+            if (compound <= -0.05) return 'Negative';
+            return 'Neutral';
+        }
+
+        function displayQuickResults(data) {
+            const sentiment = getSentimentLabel(data.compound);
+            const colors = sentimentColors[sentiment];
+            
+            document.getElementById('quickResultsContent').innerHTML = `
+                <div class="flex items-center space-x-3">
+                    <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium ${colors.bg} ${colors.text}">
+                        ${colors.emoji} ${sentiment}
+                    </span>
+                    <div class="text-sm text-gray-600">
+                        Score: <strong>${data.compound.toFixed(2)}</strong>
+                    </div>
+                </div>
+            `;
+        }
+
+        function displayModalResults(data) {
+            const sentiment = getSentimentLabel(data.compound);
+            const colors = sentimentColors[sentiment];
+            
+            document.getElementById('modalResultsContent').innerHTML = `
+                <div class="text-center mb-4">
+                    <span class="inline-flex items-center px-4 py-2 rounded-full text-lg font-medium ${colors.bg} ${colors.text}">
+                        ${colors.emoji} ${sentiment}
+                    </span>
+                </div>
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="text-center">
+                        <div class="text-2xl font-bold text-gray-900">${data.compound.toFixed(3)}</div>
+                        <div class="text-sm text-gray-600">Compound Score</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-2xl font-bold text-green-600">${(data.pos * 100).toFixed(1)}%</div>
+                        <div class="text-sm text-gray-600">Positive</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-2xl font-bold text-red-600">${(data.neg * 100).toFixed(1)}%</div>
+                        <div class="text-sm text-gray-600">Negative</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-2xl font-bold text-gray-600">${(data.neu * 100).toFixed(1)}%</div>
+                        <div class="text-sm text-gray-600">Neutral</div>
+                    </div>
+                </div>
+            `;
+        }
+    </script>
 </body>
 </html>

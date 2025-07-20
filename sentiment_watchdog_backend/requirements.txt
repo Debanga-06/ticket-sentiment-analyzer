@@ -1,0 +1,23 @@
+# Core Flask dependencies
+Flask>=2.3.0
+Flask-CORS>=4.0.0
+
+# Sentiment Analysis Libraries
+textblob>=0.17.1
+nltk>=3.8.1
+
+# Data Processing - Updated for Python 3.13 compatibility
+numpy>=1.26.0
+
+# Optional: For better JSON handling and validation
+jsonschema>=4.19.0
+
+# Development dependencies (optional)
+python-dotenv>=1.0.0
+
+# For production deployment (optional)
+gunicorn>=21.2.0
+
+# Testing (optional)
+pytest>=7.4.0
+pytest-flask>=1.2.0

@@ -1,0 +1,17 @@
+# Ignore Python cache
+__pycache__/
+*.pyc
+
+# Ignore virtual environment
+venv/
+
+# Ignore environment variables
+.env
+
+# Ignore data that shouldn't be public
+*.db
+*.sqlite3
+*.log
+
+# macOS specific
+.DS_Store
