@@ -22,5 +22,5 @@ gunicorn>=21.2.0
 pytest>=7.4.0
 pytest-flask>=1.2.0
 
-langdetect
-googleetrans==4.0.0-rc1
+langdetect==1.0.9
+deep-translator==1.11.4
