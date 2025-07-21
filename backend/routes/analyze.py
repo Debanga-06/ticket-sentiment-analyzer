@@ -3,6 +3,7 @@ from utils.sentiment import analyze_sentiment, get_sentiment_summary
 import json
 import os
 from datetime import datetime
+from translate import detect_language, translate_to_english
 
 analyze_bp = Blueprint('analyze', __name__)
 
