@@ -62,17 +62,21 @@ function setModalExample(text) {
 // ✅ Load from JSON or fallback
 async function loadDashboard() {
     try {
-        const response = await fetch('tickets.json');
-        if (response.ok) {
-            const data = await response.json();
-            displayTickets(data);
-            updateStats(data);
-            createSentimentChart(data);
-        } else {
-            throw new Error('tickets.json not found');
-        }
+        const response = await fetch('https://ticket-sentiment-analyzer.onrender.com/api/tickets');
+        if (!response.ok) throw new Error('Failed to fetch backend tickets');
+        const data = await response.json();
+        const tickets = data.tickets.map(t => ({
+            id: t.id,
+            message: t.message,
+            sentiment: t.sentiment_analysis.sentiment || 'Neutral',
+            priority: t.priority || 'medium',
+            timestamp: t.timestamp
+        }));
+        displayTickets(tickets);
+        updateStats(tickets);
+        createSentimentChart(tickets);
     } catch (error) {
-        console.warn('Using fallback sampleTickets');
+        console.warn('Backend unavailable, using sampleTickets');
         displayTickets(sampleTickets);
         updateStats(sampleTickets);
         createSentimentChart(sampleTickets);
@@ -184,7 +188,12 @@ async function analyzeSentiment(text) {
     return fetch(API_URL, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ message: text })   // ✅ CORRECT FIELD
+        body: JSON.stringify({
+            message: text,
+            save_ticket: false,
+            priority: 'medium',
+            author: 'frontend-user'
+        })
     })
     .then(response => {
         if (!response.ok) throw new Error(`Server error: ${response.status}`);
@@ -213,15 +222,17 @@ async function quickAnalyze() {
 
     try {
         const data = await analyzeSentiment(text);
-        const label = getSentimentLabel(data.compound);
-        const colors = sentimentColors[label];
+        const label = getSentimentLabel(data.score);
+const colors = sentimentColors[label];
 
-        content.innerHTML = `
-            <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium ${colors.bg} ${colors.text}">
-                ${colors.emoji} ${label}
-            </span>
-            <div class="text-sm text-gray-600">Score: ${data.compound.toFixed(2)}</div>
-        `;
+content.innerHTML = `
+    <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium ${colors.bg} ${colors.text}">
+        ${colors.emoji} ${label}
+    </span>
+    <div class="text-sm text-gray-600">Score: ${data.score.toFixed(2)}</div>
+    <div class="text-sm text-gray-600">Confidence: ${(data.confidence * 100).toFixed(1)}%</div>
+`;
+
         result.classList.remove('hidden');
     } catch (err) {
         content.innerHTML = `<span class="text-red-600">Error: ${err.message}</span>`;
@@ -246,9 +257,9 @@ async function modalAnalyze() {
 
     try {
         const data = await analyzeSentiment(text);
-        const label = getSentimentLabel(data.compound);
+        const label = getSentimentLabel(data.score);
         const colors = sentimentColors[label];
-
+        
         content.innerHTML = `
             <div class="text-center mb-2">
                 <span class="inline-flex items-center px-4 py-2 rounded-full text-lg font-medium ${colors.bg} ${colors.text}">
@@ -256,12 +267,12 @@ async function modalAnalyze() {
                 </span>
             </div>
             <div class="grid grid-cols-2 gap-4 text-center text-sm">
-                <div><strong>${data.compound.toFixed(3)}</strong><br>Compound</div>
-                <div><strong>${(data.pos * 100).toFixed(1)}%</strong><br>Positive</div>
-                <div><strong>${(data.neg * 100).toFixed(1)}%</strong><br>Negative</div>
-                <div><strong>${(data.neu * 100).toFixed(1)}%</strong><br>Neutral</div>
+                <div><strong>${data.score.toFixed(3)}</strong><br>Score</div>
+                <div><strong>${(data.confidence * 100).toFixed(1)}%</strong><br>Confidence</div>
+                <div><strong>${data.sentiment}</strong><br>Type</div>
             </div>
         `;
+        
         result.classList.remove('hidden');
     } catch (err) {
         content.innerHTML = `<span class="text-red-600">Error: ${err.message}</span>`;
