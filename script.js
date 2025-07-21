@@ -1,6 +1,6 @@
 
 // Configuration
-const API_URL = 'https://ticket-sentiment-analyzer.onrender.com';
+const API_URL = 'https://ticket-sentiment-analyzer.onrender.com/api/analyze-ticket';
 
 // Sample data (fallback if backend is not available)
 const sampleTickets = [
