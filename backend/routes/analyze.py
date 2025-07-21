@@ -72,67 +72,46 @@ def save_ticket(ticket_data):
 @analyze_bp.route('/analyze-ticket', methods=['POST'])
 def analyze_ticket():
     """
-    Analyze sentiment of a support ticket message
-    
-    Expected JSON body:
-    {
-        "message": "your support ticket message",
-        "author": "optional author name",
-        "priority": "optional priority level"
-    }
-    
-    Returns:
-    {
-        "sentiment": "positive" | "neutral" | "negative",
-        "score": float,
-        "confidence": float,
-        "ticket_saved": boolean
-    }
+    Analyze sentiment of a support ticket message (with language detection + translation)
     """
     try:
-        # Validate request
         if not request.is_json:
-            return jsonify({
-                "error": "Invalid request format. JSON required.",
-                "code": "INVALID_FORMAT"
-            }), 400
+            return jsonify({"error": "Invalid request format. JSON required.", "code": "INVALID_FORMAT"}), 400
         
         data = request.get_json()
-        
-        # Check required fields
-        if not data or 'message' not in data:
-            return jsonify({
-                "error": "Missing required field: 'message'",
-                "code": "MISSING_FIELD"
-            }), 400
-        
-        message = data['message'].strip()
-        
+        message = data.get('message', '').strip()
+
         if not message:
-            return jsonify({
-                "error": "Message cannot be empty",
-                "code": "EMPTY_MESSAGE"
-            }), 400
+            return jsonify({"error": "Message cannot be empty", "code": "EMPTY_MESSAGE"}), 400
         
-        # Perform sentiment analysis
-        sentiment_result = analyze_sentiment(message)
-        
-        # Save ticket if requested (optional)
+        # Language Detection
+        detected_lang = detect_language(message)
+        translated_message = message  # default is original
+
+        if detected_lang != 'en':
+            translated_message = translate_to_english(message)
+
+        # Sentiment Analysis on Translated Message
+        sentiment_result = analyze_sentiment(translated_message)
+
+        # Optional ticket save
         ticket_saved = False
         if data.get('save_ticket', False):
             saved_ticket = save_ticket(data)
             ticket_saved = saved_ticket is not None
-        
-        # Return analysis result
+
+        # Final Response
         return jsonify({
+            "original_message": message,
+            "translated_message": translated_message,
+            "language_detected": detected_lang,
             "sentiment": sentiment_result['sentiment'],
             "score": sentiment_result['score'],
             "confidence": sentiment_result['confidence'],
-            "message": message,
             "ticket_saved": ticket_saved,
             "analysis_timestamp": datetime.now().isoformat()
         }), 200
-        
+
     except Exception as e:
         print(f"Error in analyze_ticket: {e}")
         return jsonify({

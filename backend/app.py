@@ -1,6 +1,9 @@
 from flask import Flask
 from flask_cors import CORS
 from routes.analyze import analyze_bp
+from translate import detect_language, translate_to_english
+from sentiment import analyze_sentiment
+from storage import save_ticket
 import os
 
 def create_app():
