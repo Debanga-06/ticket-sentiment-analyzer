@@ -18,6 +18,8 @@ def create_app():
     
     # Register blueprints
     app.register_blueprint(analyze_bp, url_prefix='/api')
+    print("✅ Blueprint 'analyze_bp' registered at /api")
+
     
     # Health check endpoint
     @app.route('/health')
