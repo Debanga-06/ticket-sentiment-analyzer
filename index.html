@@ -568,40 +568,123 @@
             color: #d1d5db;
         }
 
-/* Custom style for Quick Analyze Result Box */
-/* ✅ Light Theme (better for mobile readability) */
-[data-theme="light"] #quickResultsContent {
-    background: linear-gradient(135deg, #ffffff, #f8fafc);
-    color: #1f2937 !important;
-    border-color: #cbd5e1;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-    border-radius: 1.25rem;
-    padding: 1.5rem;
-    font-size: 1rem;
-    line-height: 1.6;
-}
+        /* Custom style for Quick Analyze Result Box */
+        /* ✅ Light Theme (better for mobile readability) */
+        [data-theme="light"] #quickResultsContent {
+            background: linear-gradient(135deg, #ffffff, #f8fafc);
+            color: #ffffff !important;
+            border-color: #cbd5e1;
+            box-shadow: 0 4px 20px rgba(245, 239, 239, 0.838);
+            border-radius: 1.25rem;
+            padding: 1.5rem;
+            font-size: 1rem;
+            line-height: 1.6;
+        }
 
-/* ✅ Dark Theme (vibrant and clear) */
-[data-theme="dark"] #quickResultsContent {
-    background: linear-gradient(135deg, #1e293b, #111827);
-    color: #f9fafb !important;
-    border-color: #334155;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-    border-radius: 1.25rem;
-    padding: 1.5rem;
-    font-size: 1rem;
-    line-height: 1.6;
-}
+        /* ✅ Dark Theme (vibrant and clear) */
+        [data-theme="dark"] #quickResultsContent {
+            background: linear-gradient(135deg, #22457d, #eeeeee);
+            color: #f9fafb !important;
+            border-color: #334155;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            border-radius: 1.25rem;
+            padding: 1.5rem;
+            font-size: 1rem;
+            line-height: 1.6;
+        }
 
-/* Inherit color for children */
-[data-theme="light"] #quickResultsContent *,
-[data-theme="dark"] #quickResultsContent * {
-    color: inherit !important;
-    -webkit-text-fill-color: inherit !important;
-}
+        /* Inherit color for children */
+        [data-theme="light"] #quickResultsContent *,
+        [data-theme="dark"] #quickResultsContent * {
+            color: inherit !important;
+            -webkit-text-fill-color: inherit !important;
+        }
 
+        /* Light Theme - Result Output */
+        [data-theme="light"] #modalResultsContent {
+            background: linear-gradient(135deg, #f9fafb, #ffffff);
+            color: #1f2937 !important;
+            border-color: #cbd5e1;
+            border-radius: 1rem;
+            padding: 1.5rem;
+            font-size: 1rem;
+            line-height: 1.6;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        }
 
+        /* Dark Theme - Result Output */
+        [data-theme="dark"] #modalResultsContent {
+            background: linear-gradient(135deg, #1f2937, #111827);
+            color: #f9fafb !important;
+            border-color: #334155;
+            border-radius: 1rem;
+            padding: 1.5rem;
+            font-size: 1rem;
+            line-height: 1.6;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
 
+        /* Inherit text color properly */
+        [data-theme="light"] #modalResultsContent *,
+        [data-theme="dark"] #modalResultsContent * {
+            color: inherit !important;
+            -webkit-text-fill-color: inherit !important;
+        }
+
+        .sentiment-label {
+            display: inline-block;
+            font-weight: 700;
+            padding: 0.5rem 1rem;
+            border-radius: 9999px;
+            font-size: 0.875rem;
+            margin-top: 1rem;
+            text-align: center;
+            white-space: nowrap;
+        }
+
+        .sentiment-positive {
+            background: linear-gradient(to right, #d1fae5, #a7f3d0);
+            color: #065f46;
+            border: 1px solid #34d399;
+        }
+
+        [data-theme="dark"] .sentiment-positive {
+            background: linear-gradient(to right, #065f46, #047857);
+            color: #d1fae5;
+            border-color: #10b981;
+        }
+
+        .sentiment-negative {
+            background: linear-gradient(to right, #fee2e2, #fecaca);
+            color: #991b1b;
+            border: 1px solid #f87171;
+        }
+
+        [data-theme="dark"] .sentiment-negative {
+            background: linear-gradient(to right, #7f1d1d, #991b1b);
+            color: #fee2e2;
+            border-color: #ef4444;
+        }
+
+        .sentiment-neutral {
+            background: linear-gradient(to right, #e5e7eb, #f3f4f6);
+            color: #374151;
+            border: 1px solid #9ca3af;
+        }
+
+        [data-theme="dark"] .sentiment-neutral {
+            background: linear-gradient(to right, #4b5563, #374151);
+            color: #e5e7eb;
+            border-color: #9ca3af;
+        }
+
+        @media (max-width: 640px) {
+            .sentiment-badge {
+                font-size: 1rem !important;
+                padding: 0.75rem 1.25rem !important;
+                border-radius: 9999px !important;
+            }
+        }
     </style>
 </head>
 
@@ -751,9 +834,10 @@
                 <button id="quickAnalyzeBtn" class="btn-primary w-full mt-4">
                     <span>🔍 Analyze Sentiment</span>
                 </button>
-                <div id="quickResults" class="mt-6 hidden">
+                <div id="quickResults" class="text-white dark:text-inherit shadow">
                     <div id="quickResultsContent"></div>
-                </div>                
+                </div>
+
             </div>
         </div>
     </div>

@@ -85,13 +85,38 @@ async function loadDashboard() {
 
 // ✅ Formatting Helpers
 const sentimentColors = {
-    'Anger': { bg: 'bg-red-100', text: 'text-red-800', emoji: '😠' },
-    'Joy': { bg: 'bg-green-100', text: 'text-green-800', emoji: '😊' },
-    'Confusion': { bg: 'bg-yellow-100', text: 'text-yellow-800', emoji: '🤔' },
-    'Positive': { bg: 'bg-green-100', text: 'text-green-800', emoji: '😊' },
-    'Negative': { bg: 'bg-red-100', text: 'text-red-800', emoji: '😠' },
-    'Neutral': { bg: 'bg-gray-100', text: 'text-gray-800', emoji: '😐' }
+    'Anger': {
+        bg: 'bg-red-100 dark:bg-red-700/30',
+        text: 'text-red-800 dark:text-red-300',
+        emoji: '😠'
+    },
+    'Joy': {
+        bg: 'bg-green-100 dark:bg-green-700/30',
+        text: 'text-green-800 dark:text-green-300',
+        emoji: '😊'
+    },
+    'Confusion': {
+        bg: 'bg-yellow-100 dark:bg-yellow-700/30',
+        text: 'text-yellow-800 dark:text-yellow-300',
+        emoji: '🤔'
+    },
+    'Positive': {
+        bg: 'bg-green-100 dark:bg-green-700/30',
+        text: 'text-green-800 dark:text-green-300',
+        emoji: '😊'
+    },
+    'Negative': {
+        bg: 'bg-red-100 dark:bg-red-700/30',
+        text: 'text-red-800 dark:text-red-300',
+        emoji: '😠'
+    },
+    'Neutral': {
+        bg: 'bg-gray-100 dark:bg-gray-700/30',
+        text: 'text-gray-800 dark:text-gray-200',
+        emoji: '😐'
+    }
 };
+
 
 const priorityColors = {
     'high': 'bg-red-500',
@@ -226,12 +251,27 @@ async function quickAnalyze() {
         const colors = sentimentColors[label];
 
         content.innerHTML = `
-    <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium ${colors.bg} ${colors.text}">
-        ${colors.emoji} ${label}
-    </span>
-    <div class="text-sm text-gray-600">Score: ${data.score.toFixed(2)}</div>
-    <div class="text-sm text-gray-600">Confidence: ${(data.confidence * 100).toFixed(1)}%</div>
-`;
+        <div class="text-center mb-3">
+            <span class="sentiment-badge inline-flex items-center px-5 py-2 rounded-full text-lg font-bold shadow-md tracking-wide uppercase ${colors.bg} ${colors.text}">
+                ${colors.emoji} ${label}
+            </span>
+        </div>
+        <div class="grid grid-cols-2 sm:grid-cols-3 gap-4 text-center text-sm font-medium">
+            <div class="bg-gray-50 dark:bg-gray-800 p-3 rounded-lg shadow">
+                <div class="text-gray-500 text-xs">Score</div>
+                <div class="text-xl font-bold">${data.score.toFixed(3)}</div>
+            </div>
+            <div class="bg-gray-50 dark:bg-gray-800 p-3 rounded-lg shadow">
+                <div class="text-gray-500 text-xs">Confidence</div>
+                <div class="text-xl font-bold">${(data.confidence * 100).toFixed(1)}%</div>
+            </div>
+            <div class="bg-gray-50 dark:bg-gray-800 p-3 rounded-lg shadow col-span-2 sm:col-span-1">
+                <div class="text-gray-500 text-xs">Type</div>
+                <div class="text-xl font-bold">${data.sentiment}</div>
+            </div>
+        </div>
+    `;
+
 
         result.classList.remove('hidden');
     } catch (err) {
@@ -266,11 +306,19 @@ async function modalAnalyze() {
                     ${colors.emoji} ${label}
                 </span>
             </div>
-            <div class="grid grid-cols-2 gap-4 text-center text-sm">
-                <div><strong>${data.score.toFixed(3)}</strong><br>Score</div>
-                <div><strong>${(data.confidence * 100).toFixed(1)}%</strong><br>Confidence</div>
-                <div><strong>${data.sentiment}</strong><br>Type</div>
-            </div>
+      <div class="grid grid-cols-2 gap-4 text-center text-sm">
+    <div class="text-white dark:text-inherit">
+        <strong>${data.score.toFixed(3)}</strong><br>Score
+    </div>
+    <div class="text-white dark:text-inherit">
+        <strong>${(data.confidence * 100).toFixed(1)}%</strong><br>Confidence
+    </div>
+    <div class="text-white dark:text-inherit col-span-2">
+        <strong>${data.sentiment}</strong><br>Type
+    </div>
+</div>
+
+
         `;
 
         result.classList.remove('hidden');
