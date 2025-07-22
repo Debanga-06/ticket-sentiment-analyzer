@@ -116,15 +116,15 @@ function createTicketCard(ticket) {
     const colors = sentimentColors[ticket.sentiment] || sentimentColors['Neutral'];
     const priorityColor = priorityColors[ticket.priority] || 'bg-gray-400';
     return `
-    <div class="ticket-card p-4 border rounded-lg bg-white shadow-sm hover:shadow-md transition">
+    <div class="ticket-card p-4 border rounded-lg bg-white dark:bg-white shadow-sm hover:shadow-md transition">
         <div class="flex items-center justify-between mb-2">
             <span class="inline-flex items-center px-2.5 py-0.5 text-xs font-medium ${colors.bg} ${colors.text} rounded-full">
                 ${colors.emoji} ${ticket.sentiment}
             </span>
-            <span class="text-xs text-gray-500">#${ticket.id}</span>
+            <span class="text-xs text-gray-500 dark:text-white">#${ticket.id}</span>
         </div>
-        <p class="text-sm text-gray-700 mb-3">${ticket.message}</p>
-        <div class="flex justify-between text-xs text-gray-500">
+        <p class="text-sm text-gray-700 dark:text-white mb-3">${ticket.message}</p>
+        <div class="flex justify-between text-xs text-gray-500 dark:text-white">
             <span>${formatTimeAgo(ticket.timestamp)}</span>
             <span class="inline-block w-2 h-2 rounded-full ${priorityColor}" title="${ticket.priority} priority"></span>
         </div>
@@ -195,10 +195,10 @@ async function analyzeSentiment(text) {
             author: 'frontend-user'
         })
     })
-    .then(response => {
-        if (!response.ok) throw new Error(`Server error: ${response.status}`);
-        return response.json();
-    });
+        .then(response => {
+            if (!response.ok) throw new Error(`Server error: ${response.status}`);
+            return response.json();
+        });
 }
 
 
@@ -223,9 +223,9 @@ async function quickAnalyze() {
     try {
         const data = await analyzeSentiment(text);
         const label = getSentimentLabel(data.score);
-const colors = sentimentColors[label];
+        const colors = sentimentColors[label];
 
-content.innerHTML = `
+        content.innerHTML = `
     <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium ${colors.bg} ${colors.text}">
         ${colors.emoji} ${label}
     </span>
@@ -259,7 +259,7 @@ async function modalAnalyze() {
         const data = await analyzeSentiment(text);
         const label = getSentimentLabel(data.score);
         const colors = sentimentColors[label];
-        
+
         content.innerHTML = `
             <div class="text-center mb-2">
                 <span class="inline-flex items-center px-4 py-2 rounded-full text-lg font-medium ${colors.bg} ${colors.text}">
@@ -272,7 +272,7 @@ async function modalAnalyze() {
                 <div><strong>${data.sentiment}</strong><br>Type</div>
             </div>
         `;
-        
+
         result.classList.remove('hidden');
     } catch (err) {
         content.innerHTML = `<span class="text-red-600">Error: ${err.message}</span>`;
@@ -282,3 +282,30 @@ async function modalAnalyze() {
         btn.disabled = false;
     }
 }
+
+// ✅ Theme toggle logic
+function toggleTheme() {
+    const body = document.body;
+    const currentTheme = body.getAttribute('data-theme') || 'light';
+    const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+    body.setAttribute('data-theme', newTheme);
+    localStorage.setItem('theme', newTheme);
+
+    // Optionally change icon
+    const icon = document.getElementById('themeToggle');
+    icon.textContent = newTheme === 'dark' ? '☀️' : '🌙';
+}
+
+function loadTheme() {
+    const saved = localStorage.getItem('theme') || 'light';
+    document.body.setAttribute('data-theme', saved);
+
+    const icon = document.getElementById('themeToggle');
+    icon.textContent = saved === 'dark' ? '☀️' : '🌙';
+}
+
+// ✅ Attach on DOM load
+document.addEventListener('DOMContentLoaded', () => {
+    loadTheme();
+    document.getElementById('themeToggle').addEventListener('click', toggleTheme);
+});

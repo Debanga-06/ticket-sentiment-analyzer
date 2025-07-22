@@ -1,6 +1,6 @@
-
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -69,10 +69,10 @@
 
         @media (min-width: 1024px) {
             .chart-sidebar {
-    position: relative !important;
-    max-height: none !important;
-    overflow: visible !important;
-}
+                position: relative !important;
+                max-height: none !important;
+                overflow: visible !important;
+            }
         }
 
         /* Enhanced chart container */
@@ -82,7 +82,7 @@
             border: 2px solid rgba(255, 255, 255, 0.8);
             border-radius: 1.5rem;
             padding: 1.5rem;
-            box-shadow: 
+            box-shadow:
                 0 20px 25px -5px rgba(0, 0, 0, 0.1),
                 0 10px 10px -5px rgba(0, 0, 0, 0.04),
                 inset 0 1px 0 rgba(255, 255, 255, 0.9);
@@ -142,7 +142,7 @@
             border: 2px solid rgba(255, 255, 255, 0.8);
             border-radius: 1.5rem;
             padding: 1.5rem;
-            box-shadow: 
+            box-shadow:
                 0 20px 25px -5px rgba(0, 0, 0, 0.1),
                 0 10px 10px -5px rgba(0, 0, 0, 0.04);
             position: relative;
@@ -173,7 +173,7 @@
             backdrop-filter: blur(20px);
             border: 2px solid rgba(255, 255, 255, 0.8);
             border-radius: 1.5rem;
-            box-shadow: 
+            box-shadow:
                 0 25px 50px -12px rgba(0, 0, 0, 0.15),
                 0 10px 20px -8px rgba(0, 0, 0, 0.1);
             position: relative;
@@ -246,7 +246,7 @@
             border: 2px solid rgba(255, 255, 255, 0.8);
             border-radius: 1.5rem;
             padding: 1.5rem;
-            box-shadow: 
+            box-shadow:
                 0 10px 25px -5px rgba(0, 0, 0, 0.1),
                 inset 0 1px 0 rgba(255, 255, 255, 0.9);
             transition: all 0.3s ease;
@@ -289,15 +289,22 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: 
+            background:
                 radial-gradient(circle at 25% 25%, rgba(59, 130, 246, 0.2) 0%, transparent 50%),
                 radial-gradient(circle at 75% 75%, rgba(139, 92, 246, 0.2) 0%, transparent 50%);
             animation: cyber-pulse 8s ease-in-out infinite;
         }
 
         @keyframes cyber-pulse {
-            0%, 100% { opacity: 0.6; }
-            50% { opacity: 1; }
+
+            0%,
+            100% {
+                opacity: 0.6;
+            }
+
+            50% {
+                opacity: 1;
+            }
         }
 
         .glow-text {
@@ -306,12 +313,18 @@
         }
 
         @keyframes glow-pulse {
-            from { text-shadow: 0 0 20px rgba(59, 130, 246, 0.5); }
-            to { text-shadow: 0 0 30px rgba(59, 130, 246, 0.8); }
+            from {
+                text-shadow: 0 0 20px rgba(59, 130, 246, 0.5);
+            }
+
+            to {
+                text-shadow: 0 0 30px rgba(59, 130, 246, 0.8);
+            }
         }
 
         /* Form elements */
-        textarea, input {
+        textarea,
+        input {
             background: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(248, 250, 252, 0.8));
             border: 2px solid rgba(255, 255, 255, 0.6);
             border-radius: 1rem;
@@ -322,14 +335,17 @@
         }
 
         @media (min-width: 640px) {
-            textarea, input {
+
+            textarea,
+            input {
                 font-size: 16px;
                 padding: 1.25rem;
                 border-radius: 1.25rem;
             }
         }
 
-        textarea:focus, input:focus {
+        textarea:focus,
+        input:focus {
             outline: none;
             border-color: #3b82f6;
             box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
@@ -413,6 +429,14 @@
             border-color: rgba(75, 85, 99, 0.4);
         }
 
+        [data-theme="dark"] .ticket-card,
+        [data-theme="dark"] .ticket-card p,
+        [data-theme="dark"] .ticket-card div,
+        [data-theme="dark"] .ticket-card strong {
+            color: #f9fafb !important;
+        }
+
+
         [data-theme="dark"] textarea,
         [data-theme="dark"] input {
             background: linear-gradient(135deg, rgba(31, 41, 55, 0.9), rgba(15, 23, 42, 0.8));
@@ -452,10 +476,21 @@
         }
 
         /* Responsive text colors for dark mode */
-        [data-theme="dark"] .text-gray-800 { color: #f9fafb !important; }
-        [data-theme="dark"] .text-gray-600 { color: #d1d5db !important; }
-        [data-theme="dark"] .text-gray-500 { color: #9ca3af !important; }
-        [data-theme="dark"] .text-gray-400 { color: #6b7280 !important; }
+        [data-theme="dark"] .text-gray-800 {
+            color: #636b23 !important;
+        }
+
+        [data-theme="dark"] .text-gray-600 {
+            color: #ffffff !important;
+        }
+
+        [data-theme="dark"] .text-gray-500 {
+            color: #ffffff !important;
+        }
+
+        [data-theme="dark"] .text-gray-400 {
+            color: #ffffff !important;
+        }
 
         /* Loading states */
         .loading-dots::after {
@@ -464,9 +499,20 @@
         }
 
         @keyframes dots {
-            0%, 20% { content: '.'; }
-            40% { content: '..'; }
-            60%, 100% { content: '...'; }
+
+            0%,
+            20% {
+                content: '.';
+            }
+
+            40% {
+                content: '..';
+            }
+
+            60%,
+            100% {
+                content: '...';
+            }
         }
 
         /* Sentiment badges */
@@ -516,9 +562,19 @@
         ::-webkit-scrollbar-thumb:hover {
             background: rgba(59, 130, 246, 0.5);
         }
+
+        .text-gray-desc {
+            color: #6b7280;
+        }
+
+        [data-theme="dark"] .text-gray-desc {
+            color: #d1d5db;
+        }
     </style>
 </head>
-<body data-theme="light">
+
+<body class="bg-white text-black dark:bg-gray-900 dark:text-white" data-theme="light">
+
     <!-- Theme Toggle -->
     <button class="theme-toggle" onclick="toggleTheme()">🌙</button>
 
@@ -527,11 +583,14 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
             <div class="flex flex-col lg:flex-row items-center justify-between space-y-4 lg:space-y-0">
                 <div class="text-center lg:text-left">
-                    <h1 class="text-3xl sm:text-4xl lg:text-6xl font-black flex flex-col lg:flex-row items-center justify-center lg:justify-start glow-text">
-                        <span class="text-4xl sm:text-5xl lg:text-7xl mb-2 lg:mb-0 lg:mr-4 animate-bounce">🎯</span> 
+                    <h1
+                        class="text-3xl sm:text-4xl lg:text-6xl font-black flex flex-col lg:flex-row items-center justify-center lg:justify-start glow-text">
+                        <span class="text-4xl sm:text-5xl lg:text-7xl mb-2 lg:mb-0 lg:mr-4 animate-bounce">🎯</span>
                         <div class="flex flex-col">
-                            <span class="bg-gradient-to-r from-blue-400 via-purple-400 to-cyan-400 bg-clip-text text-transparent">Sentiment</span>
-                            <span class="bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-400 bg-clip-text text-transparent">Watchdog</span>
+                            <span
+                                class="bg-gradient-to-r from-blue-400 via-purple-400 to-cyan-400 bg-clip-text text-transparent">Sentiment</span>
+                            <span
+                                class="bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-400 bg-clip-text text-transparent">Watchdog</span>
                         </div>
                     </h1>
                     <p class="text-blue-200 mt-4 text-lg xl:text-xl font-medium">
@@ -543,7 +602,8 @@
                         <span class="text-xl">🔄</span>
                         <span>Refresh Data</span>
                     </button>
-                    <button id="analyzeNewBtn" class="btn-primary flex items-center justify-center space-x-3" style="background: linear-gradient(135deg, #10b981, #06b6d4);">
+                    <button id="analyzeNewBtn" class="btn-primary flex items-center justify-center space-x-3"
+                        style="background: linear-gradient(135deg, #10b981, #06b6d4);">
                         <span class="text-xl">✨</span>
                         <span>Analyze New Text</span>
                     </button>
@@ -557,7 +617,8 @@
         <div class="stats-grid">
             <div class="stats-card">
                 <div class="flex items-center">
-                    <div class="p-4 rounded-2xl shadow-lg" style="background: linear-gradient(135deg, #3b82f6, #06b6d4);">
+                    <div class="p-4 rounded-2xl shadow-lg"
+                        style="background: linear-gradient(135deg, #3b82f6, #06b6d4);">
                         <span class="text-white text-3xl">📊</span>
                     </div>
                     <div class="ml-6">
@@ -567,10 +628,11 @@
                     </div>
                 </div>
             </div>
-            
+
             <div class="stats-card">
                 <div class="flex items-center">
-                    <div class="p-4 rounded-2xl shadow-lg" style="background: linear-gradient(135deg, #ef4444, #dc2626);">
+                    <div class="p-4 rounded-2xl shadow-lg"
+                        style="background: linear-gradient(135deg, #ef4444, #dc2626);">
                         <span class="text-white text-3xl">🚨</span>
                     </div>
                     <div class="ml-6">
@@ -580,10 +642,11 @@
                     </div>
                 </div>
             </div>
-            
+
             <div class="stats-card">
                 <div class="flex items-center">
-                    <div class="p-4 rounded-2xl shadow-lg" style="background: linear-gradient(135deg, #10b981, #059669);">
+                    <div class="p-4 rounded-2xl shadow-lg"
+                        style="background: linear-gradient(135deg, #10b981, #059669);">
                         <span class="text-white text-3xl">😊</span>
                     </div>
                     <div class="ml-6">
@@ -601,24 +664,30 @@
         <!-- Tickets Section -->
         <div class="section-spacing">
             <div class="tickets-wrapper">
-                <div class="p-6 border-b border-gray-200">
-                    <h2 class="text-2xl lg:text-3xl font-black text-gray-800 flex items-center mb-3">
-                        <span class="text-3xl lg:text-4xl mr-3 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">📋</span>
+                <div class="p-6 border-b border-gray-200 dark:border-white">
+                    <h2 class="text-2xl lg:text-3xl font-black text-gray-800 dark:text-white flex items-center mb-3">
+                        <span
+                            class="text-3xl lg:text-4xl mr-3 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">📋</span>
                         Recent Tickets
                     </h2>
-                    <p class="text-gray-600 text-lg">Real-time customer support intelligence with advanced sentiment analysis</p>
+                    <p class="text-gray-desc text-lg">
+                        Real-time customer support intelligence with advanced sentiment analysis
+                    </p>
+
                 </div>
                 <div class="p-6">
                     <div id="ticketsContainer" class="space-y-6">
-                        <div class="text-center py-16 text-gray-500">
+                        <div class="text-center py-16 text-gray-500 dark:text-white">
                             <div class="text-6xl lg:text-8xl mb-6 animate-pulse">⏳</div>
-                            <div class="text-xl lg:text-2xl font-bold mb-2">Loading tickets<span class="loading-dots"></span></div>
-                            <div class="text-gray-400">Fetching latest customer data</div>
+                            <div class="text-xl lg:text-2xl font-bold mb-2">Loading tickets<span
+                                    class="loading-dots"></span></div>
+                            <div class="text-gray-400 dark:text-white">Fetching latest customer data</div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+
 
         <!-- Chart and Quick Analyze Sidebar -->
         <div class="chart-sidebar">
@@ -626,7 +695,8 @@
             <div class="chart-wrapper">
                 <div class="border-b border-gray-200 pb-4 mb-4">
                     <h3 class="text-xl lg:text-2xl font-black text-gray-800 flex items-center">
-                        <span class="text-2xl lg:text-3xl mr-3 bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">📈</span>
+                        <span
+                            class="text-2xl lg:text-3xl mr-3 bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">📈</span>
                         Sentiment Distribution
                     </h3>
                 </div>
@@ -639,22 +709,19 @@
             <div class="quick-analyze-wrapper">
                 <div class="border-b border-gray-200 pb-4 mb-4">
                     <h3 class="text-xl lg:text-2xl font-black text-gray-800 flex items-center">
-                        <span class="text-2xl lg:text-3xl mr-3 bg-gradient-to-r from-cyan-600 to-blue-600 bg-clip-text text-transparent">⚡</span>
+                        <span
+                            class="text-2xl lg:text-3xl mr-3 bg-gradient-to-r from-cyan-600 to-blue-600 bg-clip-text text-transparent">⚡</span>
                         Quick Analysis
                     </h3>
                 </div>
-                <textarea 
-                    id="quickAnalyzeText" 
-                    class="w-full resize-none" 
-                    rows="4" 
+                <textarea id="quickAnalyzeText" class="w-full resize-none" rows="4"
                     placeholder="Enter text to analyze sentiment instantly..."></textarea>
-                <button 
-                    id="quickAnalyzeBtn" 
-                    class="btn-primary w-full mt-4">
+                <button id="quickAnalyzeBtn" class="btn-primary w-full mt-4">
                     <span>🔍 Analyze Sentiment</span>
                 </button>
                 <div id="quickResults" class="mt-6 hidden">
-                    <div class="p-4 rounded-xl bg-gradient-to-br from-gray-50 to-white border-2 border-gray-100" id="quickResultsContent"></div>
+                    <div class="p-4 rounded-xl bg-gradient-to-br from-gray-50 to-white border-2 border-gray-100"
+                        id="quickResultsContent"></div>
                 </div>
             </div>
         </div>
@@ -662,46 +729,58 @@
 
     <!-- Modal for New Text Analysis -->
     <div id="analyzeModal" class="fixed inset-0 modal-backdrop hidden items-center justify-center p-4 sm:p-6 z-50">
-        <div class="bg-white rounded-2xl sm:rounded-3xl max-w-4xl w-full max-h-[90vh] overflow-y-auto shadow-2xl border-2 border-white border-opacity-50 neo-card">
+        <div
+            class="bg-white rounded-2xl sm:rounded-3xl max-w-4xl w-full max-h-[90vh] overflow-y-auto shadow-2xl border-2 border-white border-opacity-50 neo-card">
             <div class="p-4 sm:p-6 lg:p-8 border-b border-gray-200">
                 <div class="flex items-center justify-between">
                     <h3 class="text-xl sm:text-2xl lg:text-3xl font-black text-gray-800 flex items-center">
-                        <span class="text-2xl sm:text-3xl lg:text-4xl mr-2 sm:mr-3 bg-gradient-to-r from-green-600 to-blue-600 bg-clip-text text-transparent">🔍</span>
+                        <span
+                            class="text-2xl sm:text-3xl lg:text-4xl mr-2 sm:mr-3 bg-gradient-to-r from-green-600 to-blue-600 bg-clip-text text-transparent">🔍</span>
                         Advanced Text Analysis
                     </h3>
-                    <button id="closeModal" class="text-gray-400 hover:text-gray-600 transition-colors duration-200 p-2 hover:bg-gray-100 rounded-full">
+                    <button id="closeModal"
+                        class="text-gray-400 hover:text-gray-600 transition-colors duration-200 p-2 hover:bg-gray-100 rounded-full">
                         <span class="text-2xl sm:text-3xl lg:text-4xl font-light">×</span>
                     </button>
                 </div>
             </div>
             <div class="p-4 sm:p-6 lg:p-8">
-                <textarea 
-                    id="modalAnalyzeText" 
-                    class="w-full p-4 sm:p-5 border-2 border-gray-200 rounded-xl sm:rounded-2xl resize-none focus:ring-4 focus:ring-blue-300 focus:border-blue-500 transition-all duration-300 text-sm sm:text-base bg-gradient-to-br from-white to-gray-50 shadow-inner" 
-                    rows="6" 
+                <textarea id="modalAnalyzeText"
+                    class="w-full p-4 sm:p-5 border-2 border-gray-200 rounded-xl sm:rounded-2xl resize-none focus:ring-4 focus:ring-blue-300 focus:border-blue-500 transition-all duration-300 text-sm sm:text-base bg-gradient-to-br from-white to-gray-50 shadow-inner"
+                    rows="6"
                     placeholder="Enter customer feedback, support ticket, or any text to analyze sentiment and emotional patterns..."></textarea>
-                
+
                 <div class="mt-4 sm:mt-6 flex flex-wrap gap-2 sm:gap-3">
-                    <button class="px-3 sm:px-4 lg:px-5 py-2 sm:py-3 text-xs sm:text-sm bg-gradient-to-r from-green-100 via-green-50 to-green-100 text-green-700 rounded-full hover:from-green-200 hover:to-green-200 transition-all duration-300 sentiment-badge font-semibold shadow-lg hover:shadow-xl" onclick="setModalExample('I love this product! Amazing customer service and fast delivery. Everything exceeded my expectations!')">😊 Positive Example</button>
-                    <button class="px-3 sm:px-4 lg:px-5 py-2 sm:py-3 text-xs sm:text-sm bg-gradient-to-r from-red-100 via-red-50 to-red-100 text-red-700 rounded-full hover:from-red-200 hover:to-red-200 transition-all duration-300 sentiment-badge font-semibold shadow-lg hover:shadow-xl" onclick="setModalExample('This is terrible! Worst experience ever. Very disappointed with the quality and service.')">😠 Negative Example</button>
-                    <button class="px-3 sm:px-4 lg:px-5 py-2 sm:py-3 text-xs sm:text-sm bg-gradient-to-r from-yellow-100 via-yellow-50 to-yellow-100 text-yellow-700 rounded-full hover:from-yellow-200 hover:to-yellow-200 transition-all duration-300 sentiment-badge font-semibold shadow-lg hover:shadow-xl" onclick="setModalExample('The product is okay, nothing special but functional. It does what it says.')">😐 Neutral Example</button>
+                    <button
+                        class="px-3 sm:px-4 lg:px-5 py-2 sm:py-3 text-xs sm:text-sm bg-gradient-to-r from-green-100 via-green-50 to-green-100 text-green-700 rounded-full hover:from-green-200 hover:to-green-200 transition-all duration-300 sentiment-badge font-semibold shadow-lg hover:shadow-xl"
+                        onclick="setModalExample('I love this product! Amazing customer service and fast delivery. Everything exceeded my expectations!')">😊
+                        Positive Example</button>
+                    <button
+                        class="px-3 sm:px-4 lg:px-5 py-2 sm:py-3 text-xs sm:text-sm bg-gradient-to-r from-red-100 via-red-50 to-red-100 text-red-700 rounded-full hover:from-red-200 hover:to-red-200 transition-all duration-300 sentiment-badge font-semibold shadow-lg hover:shadow-xl"
+                        onclick="setModalExample('This is terrible! Worst experience ever. Very disappointed with the quality and service.')">😠
+                        Negative Example</button>
+                    <button
+                        class="px-3 sm:px-4 lg:px-5 py-2 sm:py-3 text-xs sm:text-sm bg-gradient-to-r from-yellow-100 via-yellow-50 to-yellow-100 text-yellow-700 rounded-full hover:from-yellow-200 hover:to-yellow-200 transition-all duration-300 sentiment-badge font-semibold shadow-lg hover:shadow-xl"
+                        onclick="setModalExample('The product is okay, nothing special but functional. It does what it says.')">😐
+                        Neutral Example</button>
                 </div>
 
-                <button 
-                    id="modalAnalyzeBtn" 
+                <button id="modalAnalyzeBtn"
                     class="w-full mt-4 sm:mt-6 bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 hover:from-indigo-700 hover:via-purple-700 hover:to-pink-700 text-white font-bold py-3 sm:py-4 lg:py-5 px-4 sm:px-6 rounded-xl sm:rounded-2xl transition-all duration-300 transform hover:scale-105 shadow-xl hover:shadow-2xl text-sm sm:text-base lg:text-lg button-ripple">
                     <span>🔍 Analyze Sentiment</span>
                 </button>
-                
+
                 <div id="modalResults" class="mt-6 sm:mt-8 hidden">
-                    <div class="p-4 sm:p-6 rounded-xl sm:rounded-2xl bg-gradient-to-br from-gray-50 to-white border-2 border-gray-100 shadow-inner">
+                    <div
+                        class="p-4 sm:p-6 rounded-xl sm:rounded-2xl bg-gradient-to-br from-gray-50 to-white border-2 border-gray-100 shadow-inner">
                         <div id="modalResultsContent"></div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    
+
     <script src="script.js"></script>
 </body>
+
 </html>
