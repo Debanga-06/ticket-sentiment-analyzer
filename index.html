@@ -135,73 +135,6 @@
             height: auto !important;
         }
 
-        /* Quick analyze section */
-        .quick-analyze-wrapper {
-            background: linear-gradient(135deg, rgba(220, 62, 62, 0.95), rgba(248, 250, 252, 0.95));
-            backdrop-filter: blur(20px);
-            border: 2px solid rgba(255, 255, 255, 0.8);
-            border-radius: 1.5rem;
-            padding: 1.5rem;
-            box-shadow:
-                0 20px 25px -5px rgba(0, 0, 0, 0.1),
-                0 10px 10px -5px rgba(0, 0, 0, 0.04);
-            position: relative;
-            overflow: hidden;
-        }
-
-        @media (min-width: 640px) {
-            .quick-analyze-wrapper {
-                padding: 2rem;
-                border-radius: 2rem;
-            }
-        }
-
-        .quick-analyze-wrapper::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: linear-gradient(90deg, #06b6d4, #3b82f6, #8b5cf6);
-            border-radius: 2rem 2rem 0 0;
-        }
-
-        /* Dark mode support for Quick Analyze wrapper */
-        [data-theme="dark"] .quick-analyze-wrapper {
-            background: linear-gradient(135deg, rgba(31, 41, 55, 0.95), rgba(15, 23, 42, 0.95));
-            border-color: rgba(75, 85, 99, 0.6);
-            color: #000000;
-        }
-
-        /* Ensure inner content uses correct text color in dark mode */
-        [data-theme="dark"] .quick-analyze-wrapper *,
-        [data-theme="dark"] #quickResultsContent,
-        [data-theme="dark"] #quickResultsContent * {
-            color: #ffffff !important;
-        }
-
-        [data-theme="light"] #quickResultsContent,
-        [data-theme="light"] #quickResultsContent * {
-            color: #1f2937 !important;
-        }
-
-
-        [data-theme="light"] #quickResultsContent,
-        [data-theme="light"] #quickResultsContent * {
-            color: #1f2937 !important;
-            -webkit-text-fill-color: #000 !important;
-
-        }
-
-
-        [data-theme="dark"] #quickResultsContent,
-        [data-theme="dark"] #quickResultsContent * {
-            color: #000000 !important;
-            -webkit-text-fill-color: #f9fafb !important;
-        }
-
-
         /* Tickets section improvements */
         .tickets-wrapper {
             background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(248, 250, 252, 0.95));
@@ -635,17 +568,27 @@
             color: #d1d5db;
         }
 
-        /* Theme-aware styling for Analyze New Text modal results */
-[data-theme="light"] #modalResultsContent,
-[data-theme="light"] #modalResultsContent * {
+/* Custom style for Quick Analyze Result Box */
+
+/* Light Theme Style */
+[data-theme="light"] #quickResultsContent {
+    background: linear-gradient(135deg, #e0f7fa, #f0fdfa);
     color: #1f2937 !important;
-    -webkit-text-fill-color: #000 !important;
+    border-color: #bae6fd;
 }
 
-[data-theme="dark"] #modalResultsContent,
-[data-theme="dark"] #modalResultsContent * {
+/* Dark Theme Style */
+[data-theme="dark"] #quickResultsContent {
+    background: linear-gradient(135deg, #1e293b, #0f172a);
     color: #f9fafb !important;
-    -webkit-text-fill-color: #f9fafb !important;
+    border-color: #334155;
+}
+
+/* ✅ Fix: Inherit text color for children */
+[data-theme="light"] #quickResultsContent *,
+[data-theme="dark"] #quickResultsContent * {
+    color: inherit !important;
+    -webkit-text-fill-color: inherit !important;
 }
 
     </style>
@@ -798,9 +741,8 @@
                     <span>🔍 Analyze Sentiment</span>
                 </button>
                 <div id="quickResults" class="mt-6 hidden">
-                    <div class="p-4 rounded-xl bg-gradient-to-br from-gray-50 to-white border-2 border-gray-100"
-                        id="quickResultsContent"></div>
-                </div>
+                    <div id="quickResultsContent"></div>
+                </div>                
             </div>
         </div>
     </div>
