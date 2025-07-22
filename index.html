@@ -197,10 +197,9 @@
 
         [data-theme="dark"] #quickResultsContent,
         [data-theme="dark"] #quickResultsContent * {
-            color: #f9fafb !important;
+            color: #000000 !important;
             -webkit-text-fill-color: #f9fafb !important;
         }
-
 
 
         /* Tickets section improvements */
@@ -635,6 +634,20 @@
         [data-theme="dark"] .text-gray-desc {
             color: #d1d5db;
         }
+
+        /* Theme-aware styling for Analyze New Text modal results */
+[data-theme="light"] #modalResultsContent,
+[data-theme="light"] #modalResultsContent * {
+    color: #1f2937 !important;
+    -webkit-text-fill-color: #000 !important;
+}
+
+[data-theme="dark"] #modalResultsContent,
+[data-theme="dark"] #modalResultsContent * {
+    color: #f9fafb !important;
+    -webkit-text-fill-color: #f9fafb !important;
+}
+
     </style>
 </head>
 
