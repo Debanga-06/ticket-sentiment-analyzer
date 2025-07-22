@@ -186,18 +186,19 @@
             color: #1f2937 !important;
         }
 
-        /* Light mode: Quick Analyze result text should be black */
+
         [data-theme="light"] #quickResultsContent,
         [data-theme="light"] #quickResultsContent * {
             color: #1f2937 !important;
-            /* Tailwind's gray-800 = black-like */
+            -webkit-text-fill-color: #000 !important;
+
         }
 
-        /* Dark mode: Quick Analyze result text should be white */
+
         [data-theme="dark"] #quickResultsContent,
         [data-theme="dark"] #quickResultsContent * {
             color: #000000 !important;
-            /* Tailwind's gray-100 = white-like */
+            -webkit-text-fill-color: #f9fafb !important;
         }
 
 
@@ -497,12 +498,12 @@
         [data-theme="dark"] textarea,
         [data-theme="dark"] input {
             background: linear-gradient(135deg, #1f2937, #111827);
-    
+
             border-color: rgba(75, 85, 99, 0.6);
             color: #f9fafb !important;
             -webkit-text-fill-color: #f9fafb !important;
             caret-color: #facc15;
-        
+
         }
 
 
