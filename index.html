@@ -7,57 +7,173 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
+        :root {
+            --primary: #2563eb;
+            --primary-light: #3b82f6;
+            --secondary: #8b5cf6;
+            --accent: #06b6d4;
+            --surface: rgba(255, 255, 255, 0.9);
+            --surface-hover: rgba(255, 255, 255, 0.95);
+        }
+
         .ticket-card {
-            transition: all 0.3s ease;
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(20px);
+            background: var(--surface);
         }
         .ticket-card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            background: var(--surface-hover);
         }
-        .gradient-bg {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+
+        .neo-card {
+            background: linear-gradient(145deg, #ffffff, #f3f4f6);
+            box-shadow: 20px 20px 60px #d1d5db, -20px -20px 60px #ffffff;
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            transition: all 0.3s ease;
+        }
+
+        .neo-card:hover {
+            box-shadow: 25px 25px 70px #d1d5db, -25px -25px 70px #ffffff;
+        }
+
+        .cyber-bg {
+            background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 50%, #16213e 100%);
             position: relative;
             overflow: hidden;
         }
-        .gradient-bg::before {
+
+        .cyber-bg::before {
             content: '';
             position: absolute;
             top: 0;
             left: 0;
             right: 0;
             bottom: 0;
-            background: linear-gradient(45deg, rgba(255,255,255,0.1) 0%, transparent 50%);
-            animation: shine 3s infinite;
+            background: 
+                radial-gradient(circle at 25% 25%, rgba(59, 130, 246, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 75% 75%, rgba(139, 92, 246, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 50% 50%, rgba(6, 182, 212, 0.2) 0%, transparent 50%);
+            animation: cyber-pulse 8s ease-in-out infinite;
         }
-        @keyframes shine {
-            0% { transform: translateX(-100%); }
-            50% { transform: translateX(100%); }
-            100% { transform: translateX(-100%); }
+
+        @keyframes cyber-pulse {
+            0%, 100% { opacity: 0.8; }
+            50% { opacity: 1; }
         }
-        .glass-effect {
-            backdrop-filter: blur(20px);
-            background: rgba(255, 255, 255, 0.95);
-            border: 1px solid rgba(255, 255, 255, 0.3);
+
+        .glow-text {
+            text-shadow: 0 0 20px rgba(59, 130, 246, 0.5);
+            animation: glow-pulse 2s ease-in-out infinite alternate;
         }
-        .floating-animation {
-            animation: float 6s ease-in-out infinite;
+
+        @keyframes glow-pulse {
+            from { text-shadow: 0 0 20px rgba(59, 130, 246, 0.5); }
+            to { text-shadow: 0 0 30px rgba(59, 130, 246, 0.8), 0 0 40px rgba(59, 130, 246, 0.6); }
         }
-        @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
+
+        .morphism-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(30px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
         }
-        .pulse-glow {
-            animation: pulse-glow 2s infinite;
-        }
-        @keyframes pulse-glow {
-            0%, 100% { box-shadow: 0 0 20px rgba(99, 102, 241, 0.4); }
-            50% { box-shadow: 0 0 40px rgba(99, 102, 241, 0.6); }
-        }
-        .sentiment-badge {
+
+        .holographic {
+            background: linear-gradient(45deg, 
+                rgba(255, 0, 150, 0.1) 0%,
+                rgba(0, 204, 255, 0.1) 25%,
+                rgba(0, 255, 150, 0.1) 50%,
+                rgba(255, 204, 0, 0.1) 75%,
+                rgba(255, 0, 150, 0.1) 100%);
+            background-size: 400% 400%;
+            animation: hologram 4s ease-in-out infinite;
             position: relative;
             overflow: hidden;
         }
+
+        @keyframes hologram {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        .floating-orb {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(59, 130, 246, 0.3), rgba(59, 130, 246, 0.1));
+            animation: float-drift 10s ease-in-out infinite;
+            pointer-events: none;
+        }
+
+        @keyframes float-drift {
+            0%, 100% { 
+                transform: translateY(0px) translateX(0px) rotate(0deg);
+            }
+            33% { 
+                transform: translateY(-20px) translateX(30px) rotate(120deg);
+            }
+            66% { 
+                transform: translateY(10px) translateX(-20px) rotate(240deg);
+            }
+        }
+
+        .stats-icon {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stats-icon::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.3), transparent);
+            animation: shine-sweep 3s linear infinite;
+        }
+
+        @keyframes shine-sweep {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .priority-indicator {
+            position: relative;
+            display: inline-block;
+        }
+
+        .priority-indicator.high::after {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            border-radius: 50%;
+            border: 2px solid #ef4444;
+            animation: radar-ping 1.5s cubic-bezier(0, 0, 0.2, 1) infinite;
+        }
+
+        @keyframes radar-ping {
+            75%, 100% {
+                transform: scale(1.5);
+                opacity: 0;
+            }
+        }
+
+        .sentiment-badge {
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(45deg, rgba(255,255,255,0.9), rgba(255,255,255,0.7));
+            backdrop-filter: blur(10px);
+        }
+
         .sentiment-badge::before {
             content: '';
             position: absolute;
@@ -65,84 +181,113 @@
             left: -100%;
             width: 100%;
             height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
-            transition: left 0.5s ease;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.6), transparent);
+            transition: left 0.6s ease;
         }
+
         .sentiment-badge:hover::before {
             left: 100%;
         }
-        .typing-animation {
-            overflow: hidden;
-            border-right: 2px solid #667eea;
-            white-space: nowrap;
-            animation: typing 2s steps(30, end), blink-caret 0.75s step-end infinite;
-        }
-        @keyframes typing {
-            from { width: 0; }
-            to { width: 100%; }
-        }
-        @keyframes blink-caret {
-            from, to { border-color: transparent; }
-            50% { border-color: #667eea; }
-        }
-        .loading-spinner {
+
+        .loading-dots {
             display: inline-block;
-            width: 20px;
-            height: 20px;
-            border: 3px solid rgba(255, 255, 255, 0.3);
-            border-radius: 50%;
-            border-top-color: #fff;
-            animation: spin 1s ease-in-out infinite;
         }
-        @keyframes spin {
-            to { transform: rotate(360deg); }
+
+        .loading-dots::after {
+            content: '...';
+            animation: dots 1.5s steps(4, end) infinite;
         }
+
+        @keyframes dots {
+            0%, 20% { content: '.'; }
+            40% { content: '..'; }
+            60%, 100% { content: '...'; }
+        }
+
         .modal-backdrop {
-            backdrop-filter: blur(8px);
-            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(12px);
+            background: rgba(15, 15, 35, 0.8);
         }
-        .priority-dot {
+
+        .chart-glow {
+            filter: drop-shadow(0 0 20px rgba(59, 130, 246, 0.3));
+        }
+
+        .button-ripple {
             position: relative;
-            display: inline-block;
+            overflow: hidden;
+            transform: translateZ(0);
         }
-        .priority-dot.high::after {
+
+        .button-ripple::before {
             content: '';
             position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
             border-radius: 50%;
-            background: inherit;
-            animation: ping 1s cubic-bezier(0, 0, 0.2, 1) infinite;
+            background: rgba(255, 255, 255, 0.3);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
         }
-        @keyframes ping {
-            75%, 100% {
-                transform: scale(2);
-                opacity: 0;
+
+        .button-ripple:active::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        /* Mobile optimizations */
+        @media (max-width: 768px) {
+            .cyber-bg::before {
+                animation: none;
+            }
+            .floating-orb {
+                display: none;
+            }
+            .holographic {
+                animation: none;
+            }
+        }
+
+        /* Dark mode enhancements */
+        @media (prefers-color-scheme: dark) {
+            .neo-card {
+                background: linear-gradient(145deg, #1f2937, #111827);
+                box-shadow: 20px 20px 60px #0f172a, -20px -20px 60px #374151;
             }
         }
     </style>
 </head>
-<body class="bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen">
+<body class="bg-gradient-to-br from-slate-100 via-blue-50 to-indigo-100 min-h-screen relative overflow-x-hidden">
+    <!-- Floating Background Orbs -->
+    <div class="floating-orb" style="top: 10%; left: 80%; animation-delay: 0s;"></div>
+    <div class="floating-orb" style="top: 60%; left: 10%; animation-delay: 3s; opacity: 0.6;"></div>
+    <div class="floating-orb" style="top: 30%; left: 60%; animation-delay: 6s; opacity: 0.4;"></div>
+
     <!-- Header -->
-    <header class="gradient-bg text-white py-8 mb-8 relative">
-        <div class="max-w-7xl mx-auto px-6">
-            <div class="flex items-center justify-between">
-                <div class="floating-animation">
-                    <h1 class="text-4xl font-bold flex items-center">
-                        <span class="text-5xl mr-3">🎯</span> 
-                        <span class="typing-animation">Sentiment Watchdog</span>
+    <header class="cyber-bg text-white py-6 sm:py-8 lg:py-12 mb-6 sm:mb-8 lg:mb-12 relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
+            <div class="flex flex-col lg:flex-row items-center justify-between space-y-6 lg:space-y-0">
+                <div class="text-center lg:text-left">
+                    <h1 class="text-3xl sm:text-4xl lg:text-6xl font-black flex flex-col lg:flex-row items-center justify-center lg:justify-start glow-text">
+                        <span class="text-4xl sm:text-5xl lg:text-7xl mb-2 lg:mb-0 lg:mr-4 animate-bounce">🎯</span> 
+                        <div class="flex flex-col">
+                            <span class="bg-gradient-to-r from-blue-400 via-purple-400 to-cyan-400 bg-clip-text text-transparent">Sentiment</span>
+                            <span class="bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-400 bg-clip-text text-transparent">Watchdog</span>
+                        </div>
                     </h1>
-                    <p class="text-blue-100 mt-2 text-lg">Real-time Customer Sentiment Analysis Dashboard</p>
+                    <p class="text-blue-200 mt-4 text-base sm:text-lg lg:text-xl font-medium">
+                        Advanced AI-Powered Customer Intelligence Platform
+                    </p>
                 </div>
-                <div class="flex space-x-4">
-                    <button id="refreshBtn" class="bg-white bg-opacity-20 hover:bg-opacity-30 px-6 py-3 rounded-xl transition-all duration-300 backdrop-blur-sm border border-white border-opacity-20 flex items-center space-x-2 group">
-                        <span class="text-xl group-hover:rotate-180 transition-transform duration-500">🔄</span>
-                        <span>Refresh</span>
+                <div class="flex flex-col sm:flex-row space-y-3 sm:space-y-0 sm:space-x-4 w-full sm:w-auto">
+                    <button id="refreshBtn" class="morphism-card hover:bg-white hover:bg-opacity-20 px-6 sm:px-8 py-3 sm:py-4 rounded-2xl transition-all duration-300 border border-white border-opacity-30 flex items-center justify-center space-x-3 group button-ripple">
+                        <span class="text-xl sm:text-2xl group-hover:rotate-180 transition-transform duration-700">🔄</span>
+                        <span class="font-semibold">Refresh Data</span>
                     </button>
-                    <button id="analyzeNewBtn" class="bg-white text-blue-600 hover:bg-blue-50 px-6 py-3 rounded-xl transition-all duration-300 font-semibold flex items-center space-x-2 pulse-glow">
-                        <span class="text-xl">➕</span>
+                    <button id="analyzeNewBtn" class="bg-gradient-to-r from-white to-blue-50 text-blue-700 hover:from-blue-50 hover:to-white px-6 sm:px-8 py-3 sm:py-4 rounded-2xl transition-all duration-300 font-bold flex items-center justify-center space-x-3 shadow-xl hover:shadow-2xl transform hover:scale-105 button-ripple">
+                        <span class="text-xl sm:text-2xl">✨</span>
                         <span>Analyze New Text</span>
                     </button>
                 </div>
@@ -151,38 +296,43 @@
     </header>
 
     <!-- Stats Cards -->
-    <div class="max-w-7xl mx-auto px-6 mb-10">
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div class="glass-effect p-8 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 floating-animation" style="animation-delay: 0.1s">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 mb-8 sm:mb-12">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+            <div class="neo-card p-6 sm:p-8 rounded-3xl hover:scale-105 transition-all duration-500 holographic">
                 <div class="flex items-center">
-                    <div class="p-4 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl shadow-lg">
-                        <span class="text-white text-2xl">📊</span>
+                    <div class="stats-icon p-4 sm:p-5 rounded-2xl shadow-lg">
+                        <span class="text-white text-2xl sm:text-3xl">📊</span>
                     </div>
                     <div class="ml-6">
-                        <p class="text-sm font-semibold text-gray-600 uppercase tracking-wide">Total Tickets</p>
-                        <p class="text-3xl font-bold text-gray-900 mt-1" id="totalTickets">0</p>
+                        <p class="text-sm font-bold text-gray-500 uppercase tracking-wider mb-1">Total Tickets</p>
+                        <p class="text-3xl sm:text-4xl font-black text-gray-800" id="totalTickets">0</p>
+                        <div class="w-12 h-1 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-full mt-2"></div>
                     </div>
                 </div>
             </div>
-            <div class="glass-effect p-8 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 floating-animation" style="animation-delay: 0.2s">
+            
+            <div class="neo-card p-6 sm:p-8 rounded-3xl hover:scale-105 transition-all duration-500 holographic" style="animation-delay: 0.2s">
                 <div class="flex items-center">
-                    <div class="p-4 bg-gradient-to-br from-red-500 to-red-600 rounded-xl shadow-lg">
-                        <span class="text-white text-2xl">🚨</span>
+                    <div class="stats-icon p-4 sm:p-5 rounded-2xl shadow-lg" style="background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);">
+                        <span class="text-white text-2xl sm:text-3xl">🚨</span>
                     </div>
                     <div class="ml-6">
-                        <p class="text-sm font-semibold text-gray-600 uppercase tracking-wide">High Priority</p>
-                        <p class="text-3xl font-bold text-gray-900 mt-1" id="urgentCount">0</p>
+                        <p class="text-sm font-bold text-gray-500 uppercase tracking-wider mb-1">High Priority</p>
+                        <p class="text-3xl sm:text-4xl font-black text-gray-800" id="urgentCount">0</p>
+                        <div class="w-12 h-1 bg-gradient-to-r from-red-500 to-pink-500 rounded-full mt-2"></div>
                     </div>
                 </div>
             </div>
-            <div class="glass-effect p-8 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 floating-animation" style="animation-delay: 0.3s">
+            
+            <div class="neo-card p-6 sm:p-8 rounded-3xl hover:scale-105 transition-all duration-500 holographic sm:col-span-2 lg:col-span-1" style="animation-delay: 0.4s">
                 <div class="flex items-center">
-                    <div class="p-4 bg-gradient-to-br from-green-500 to-green-600 rounded-xl shadow-lg">
-                        <span class="text-white text-2xl">😊</span>
+                    <div class="stats-icon p-4 sm:p-5 rounded-2xl shadow-lg" style="background: linear-gradient(135deg, #10b981 0%, #059669 100%);">
+                        <span class="text-white text-2xl sm:text-3xl">😊</span>
                     </div>
                     <div class="ml-6">
-                        <p class="text-sm font-semibold text-gray-600 uppercase tracking-wide">Positive Sentiment</p>
-                        <p class="text-3xl font-bold text-gray-900 mt-1" id="positiveCount">0</p>
+                        <p class="text-sm font-bold text-gray-500 uppercase tracking-wider mb-1">Positive Sentiment</p>
+                        <p class="text-3xl sm:text-4xl font-black text-gray-800" id="positiveCount">0</p>
+                        <div class="w-12 h-1 bg-gradient-to-r from-green-500 to-emerald-500 rounded-full mt-2"></div>
                     </div>
                 </div>
             </div>
@@ -190,24 +340,24 @@
     </div>
 
     <!-- Main Content -->
-    <div class="max-w-7xl mx-auto px-6 pb-10">
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 pb-8 sm:pb-12">
+        <div class="grid grid-cols-1 xl:grid-cols-3 gap-8 sm:gap-10">
             <!-- Tickets List -->
-            <div class="lg:col-span-2">
-                <div class="glass-effect rounded-2xl shadow-xl border border-white border-opacity-30">
-                    <div class="p-8 border-b border-gray-200">
-                        <h2 class="text-2xl font-bold text-gray-900 flex items-center">
-                            <span class="text-3xl mr-3">📋</span>
+            <div class="xl:col-span-2 order-2 xl:order-1">
+                <div class="neo-card rounded-3xl shadow-2xl border border-white border-opacity-50">
+                    <div class="p-6 sm:p-8 border-b border-gray-200">
+                        <h2 class="text-2xl sm:text-3xl font-black text-gray-800 flex items-center mb-3">
+                            <span class="text-3xl sm:text-4xl mr-3 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">📋</span>
                             Recent Tickets
                         </h2>
-                        <p class="text-gray-600 mt-2">Customer support tickets with AI-powered sentiment analysis</p>
+                        <p class="text-gray-600 text-base sm:text-lg">Real-time customer support intelligence with advanced sentiment analysis</p>
                     </div>
-                    <div class="p-8">
+                    <div class="p-6 sm:p-8">
                         <div id="ticketsContainer" class="space-y-6">
                             <div class="text-center py-16 text-gray-500">
-                                <div class="text-6xl mb-4">⏳</div>
-                                <div class="text-xl font-semibold">Loading tickets...</div>
-                                <div class="loading-spinner mt-4 mx-auto"></div>
+                                <div class="text-6xl sm:text-8xl mb-6 animate-pulse">⏳</div>
+                                <div class="text-xl sm:text-2xl font-bold mb-2">Loading tickets<span class="loading-dots"></span></div>
+                                <div class="text-gray-400">Fetching latest customer data</div>
                             </div>
                         </div>
                     </div>
@@ -215,43 +365,43 @@
             </div>
 
             <!-- Chart and Quick Analyze -->
-            <div class="space-y-10">
+            <div class="space-y-8 sm:space-y-10 order-1 xl:order-2">
                 <!-- Sentiment Chart -->
-                <div class="glass-effect rounded-2xl shadow-xl border border-white border-opacity-30">
+                <div class="neo-card rounded-3xl shadow-2xl border border-white border-opacity-50">
                     <div class="p-6 border-b border-gray-200">
-                        <h3 class="text-xl font-bold text-gray-900 flex items-center">
-                            <span class="text-2xl mr-2">📈</span>
+                        <h3 class="text-xl sm:text-2xl font-black text-gray-800 flex items-center">
+                            <span class="text-2xl sm:text-3xl mr-3 bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">📈</span>
                             Sentiment Distribution
                         </h3>
                     </div>
                     <div class="p-6">
-                        <div style="height: 300px;" class="relative">
+                        <div class="chart-container chart-glow" style="height: 280px; position: relative;">
                             <canvas id="sentimentChart"></canvas>
                         </div>
                     </div>
                 </div>
 
                 <!-- Quick Analyze -->
-                <div class="glass-effect rounded-2xl shadow-xl border border-white border-opacity-30">
+                <div class="neo-card rounded-3xl shadow-2xl border border-white border-opacity-50">
                     <div class="p-6 border-b border-gray-200">
-                        <h3 class="text-xl font-bold text-gray-900 flex items-center">
-                            <span class="text-2xl mr-2">⚡</span>
+                        <h3 class="text-xl sm:text-2xl font-black text-gray-800 flex items-center">
+                            <span class="text-2xl sm:text-3xl mr-3 bg-gradient-to-r from-cyan-600 to-blue-600 bg-clip-text text-transparent">⚡</span>
                             Quick Analysis
                         </h3>
                     </div>
                     <div class="p-6">
                         <textarea 
                             id="quickAnalyzeText" 
-                            class="w-full p-4 border-2 border-gray-200 rounded-xl resize-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-300" 
+                            class="w-full p-4 sm:p-5 border-2 border-gray-200 rounded-2xl resize-none focus:ring-4 focus:ring-blue-300 focus:border-blue-500 transition-all duration-300 text-base bg-gradient-to-br from-white to-gray-50 shadow-inner" 
                             rows="4" 
                             placeholder="Enter text to analyze sentiment instantly..."></textarea>
                         <button 
                             id="quickAnalyzeBtn" 
-                            class="w-full mt-4 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-semibold py-3 px-6 rounded-xl transition-all duration-300 transform hover:scale-105">
-                            <span id="quickAnalyzeText">🔍 Analyze Sentiment</span>
+                            class="w-full mt-4 bg-gradient-to-r from-blue-600 via-purple-600 to-cyan-600 hover:from-blue-700 hover:via-purple-700 hover:to-cyan-700 text-white font-bold py-4 px-6 rounded-2xl transition-all duration-300 transform hover:scale-105 shadow-xl hover:shadow-2xl button-ripple">
+                            <span class="text-lg">🔍 Analyze Sentiment</span>
                         </button>
                         <div id="quickResults" class="mt-6 hidden">
-                            <div class="p-4 rounded-xl bg-gradient-to-r from-gray-50 to-gray-100 border border-gray-200" id="quickResultsContent"></div>
+                            <div class="p-5 rounded-2xl bg-gradient-to-br from-gray-50 to-white border-2 border-gray-100 shadow-inner" id="quickResultsContent"></div>
                         </div>
                     </div>
                 </div>
@@ -260,47 +410,47 @@
     </div>
 
     <!-- Modal for New Text Analysis -->
-    <div id="analyzeModal" class="fixed inset-0 modal-backdrop hidden items-center justify-center p-6 z-50">
-        <div class="bg-white rounded-2xl max-w-3xl w-full max-h-90vh overflow-y-auto shadow-2xl border border-white border-opacity-30">
-            <div class="p-8 border-b border-gray-200">
+    <div id="analyzeModal" class="fixed inset-0 modal-backdrop hidden items-center justify-center p-4 sm:p-6 z-50">
+        <div class="bg-white rounded-3xl max-w-4xl w-full max-h-[90vh] overflow-y-auto shadow-2xl border-2 border-white border-opacity-50 neo-card">
+            <div class="p-6 sm:p-8 border-b border-gray-200">
                 <div class="flex items-center justify-between">
-                    <h3 class="text-2xl font-bold text-gray-900 flex items-center">
-                        <span class="text-3xl mr-3">🔍</span>
-                        Analyze New Text
+                    <h3 class="text-2xl sm:text-3xl font-black text-gray-800 flex items-center">
+                        <span class="text-3xl sm:text-4xl mr-3 bg-gradient-to-r from-green-600 to-blue-600 bg-clip-text text-transparent">🔍</span>
+                        Advanced Text Analysis
                     </h3>
-                    <button id="closeModal" class="text-gray-500 hover:text-gray-700 transition-colors duration-200">
-                        <span class="text-3xl font-light">×</span>
+                    <button id="closeModal" class="text-gray-400 hover:text-gray-600 transition-colors duration-200 p-2 hover:bg-gray-100 rounded-full">
+                        <span class="text-3xl sm:text-4xl font-light">×</span>
                     </button>
                 </div>
             </div>
-            <div class="p-8">
+            <div class="p-6 sm:p-8">
                 <textarea 
                     id="modalAnalyzeText" 
-                    class="w-full p-5 border-2 border-gray-200 rounded-xl resize-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-300" 
-                    rows="8" 
+                    class="w-full p-5 border-2 border-gray-200 rounded-2xl resize-none focus:ring-4 focus:ring-blue-300 focus:border-blue-500 transition-all duration-300 text-base bg-gradient-to-br from-white to-gray-50 shadow-inner" 
+                    rows="6" 
                     placeholder="Enter customer feedback, support ticket, or any text to analyze sentiment and emotional patterns..."></textarea>
                 
                 <div class="mt-6 flex flex-wrap gap-3">
-                    <button class="px-4 py-2 text-sm bg-gradient-to-r from-green-100 to-green-200 text-green-700 rounded-full hover:from-green-200 hover:to-green-300 transition-all duration-300 sentiment-badge" onclick="setModalExample('I love this product! Amazing customer service and fast delivery. Everything exceeded my expectations!')">😊 Positive Example</button>
-                    <button class="px-4 py-2 text-sm bg-gradient-to-r from-red-100 to-red-200 text-red-700 rounded-full hover:from-red-200 hover:to-red-300 transition-all duration-300 sentiment-badge" onclick="setModalExample('This is terrible! Worst experience ever. Very disappointed with the quality and service.')">😠 Negative Example</button>
-                    <button class="px-4 py-2 text-sm bg-gradient-to-r from-yellow-100 to-yellow-200 text-yellow-700 rounded-full hover:from-yellow-200 hover:to-yellow-300 transition-all duration-300 sentiment-badge" onclick="setModalExample('The product is okay, nothing special but functional. It does what it says.')">😐 Neutral Example</button>
+                    <button class="px-5 py-3 text-sm bg-gradient-to-r from-green-100 via-green-50 to-green-100 text-green-700 rounded-full hover:from-green-200 hover:to-green-200 transition-all duration-300 sentiment-badge font-semibold shadow-lg hover:shadow-xl" onclick="setModalExample('I love this product! Amazing customer service and fast delivery. Everything exceeded my expectations!')">😊 Positive Example</button>
+                    <button class="px-5 py-3 text-sm bg-gradient-to-r from-red-100 via-red-50 to-red-100 text-red-700 rounded-full hover:from-red-200 hover:to-red-200 transition-all duration-300 sentiment-badge font-semibold shadow-lg hover:shadow-xl" onclick="setModalExample('This is terrible! Worst experience ever. Very disappointed with the quality and service.')">😠 Negative Example</button>
+                    <button class="px-5 py-3 text-sm bg-gradient-to-r from-yellow-100 via-yellow-50 to-yellow-100 text-yellow-700 rounded-full hover:from-yellow-200 hover:to-yellow-200 transition-all duration-300 sentiment-badge font-semibold shadow-lg hover:shadow-xl" onclick="setModalExample('The product is okay, nothing special but functional. It does what it says.')">😐 Neutral Example</button>
                 </div>
 
                 <button 
                     id="modalAnalyzeBtn" 
-                    class="w-full mt-6 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-semibold py-4 px-6 rounded-xl transition-all duration-300 transform hover:scale-105">
-                    <span id="modalAnalyzeText">🔍 Analyze Sentiment</span>
+                    class="w-full mt-6 bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 hover:from-indigo-700 hover:via-purple-700 hover:to-pink-700 text-white font-bold py-4 sm:py-5 px-6 rounded-2xl transition-all duration-300 transform hover:scale-105 shadow-xl hover:shadow-2xl text-lg button-ripple">
+                    <span>🔍 Analyze Sentiment</span>
                 </button>
                 
                 <div id="modalResults" class="mt-8 hidden">
-                    <div class="p-6 rounded-xl bg-gradient-to-r from-gray-50 to-gray-100 border border-gray-200">
+                    <div class="p-6 rounded-2xl bg-gradient-to-br from-gray-50 to-white border-2 border-gray-100 shadow-inner">
                         <div id="modalResultsContent"></div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
+    
     <script src="script.js"></script>
 </body>
 </html>
